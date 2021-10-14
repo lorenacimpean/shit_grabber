@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shit_grabber/controllers/base_controlles.dart';
 import 'package:shit_grabber/themes/app_colors.dart';
+import 'package:shit_grabber/themes/app_dimensions.dart';
+import 'package:shit_grabber/themes/app_icon_paths.dart';
+import 'package:shit_grabber/themes/app_strings.dart';
 import 'package:shit_grabber/themes/app_text_theme.dart';
 import 'package:shit_grabber/widgets/gradient_text_widget.dart';
 
@@ -19,19 +22,20 @@ class AppBaseScreen extends GetView<BaseController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BaseController>(
-        builder: (controller) => Scaffold(
-              appBar: _buildAppBar,
-              body: _body,
-              bottomNavigationBar: BottomNavigationBar(
-                currentIndex: controller.selectedIndex,
-                onTap: controller.selectNavigationItem,
-                selectedItemColor: AppColors.secondary,
-                unselectedItemColor: AppColors.primary,
-                enableFeedback: true,
-                type: BottomNavigationBarType.shifting,
-                items: _navigationItems(),
-              ),
-            ));
+      builder: (controller) => Scaffold(
+        appBar: _buildAppBar,
+        body: _body,
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: controller.selectedIndex,
+          onTap: controller.selectNavigationItem,
+          unselectedItemColor: AppColors.secondary,
+          showSelectedLabels: false,
+          enableFeedback: true,
+          type: BottomNavigationBarType.shifting,
+          items: _navigationItems(),
+        ),
+      ),
+    );
   }
 
   AppBar get _buildAppBar => AppBar(
@@ -47,20 +51,33 @@ class AppBaseScreen extends GetView<BaseController> {
   Widget get _body => SafeArea(child: body);
 
   List<BottomNavigationBarItem> _navigationItems() => [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.extension),
-          label: "1",
-          tooltip: "a",
+        const BottomNavigationBarItem(
+          icon: Image(
+            image: AssetImage(AppIconPaths.home),
+            height: AppDimensions.defaultPadding,
+          ),
+          label: AppStrings.dashboard,
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.ac_unit_outlined),
-          label: "2",
-          tooltip: "b",
+        const BottomNavigationBarItem(
+          icon: Image(
+            image: AssetImage(AppIconPaths.link),
+            height: AppDimensions.defaultPadding,
+          ),
+          label: AppStrings.loadDocuments,
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.accessibility_sharp),
-          label: "2",
-          tooltip: "c",
-        )
+        const BottomNavigationBarItem(
+          icon: Image(
+            image: AssetImage(AppIconPaths.phoneLink),
+            height: AppDimensions.defaultPadding,
+          ),
+          label: AppStrings.takePhoto,
+        ),
+        const BottomNavigationBarItem(
+          icon: Image(
+            image: AssetImage(AppIconPaths.settings),
+            height: AppDimensions.defaultPadding,
+          ),
+          label: AppStrings.settings,
+        ),
       ];
 }

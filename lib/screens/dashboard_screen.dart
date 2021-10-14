@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:shit_grabber/themes/app_colors.dart';
-import 'package:shit_grabber/themes/strings.dart';
+import 'package:shit_grabber/themes/app_strings.dart';
 import 'package:shit_grabber/widgets/app_base_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
