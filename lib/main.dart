@@ -1,52 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shit_grabber/bindings/base_binding.dart';
+import 'package:shit_grabber/screens/dashboard_screen.dart';
+import 'package:shit_grabber/themes/app_theme.dart';
 
-import 'controllers/controller.dart';
-
-void main() => runApp(const GetMaterialApp(
-      home: Home(),
-    ));
-
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
-
-  @override
-  Widget build(context) {
-    final Controller c = Get.put(Controller());
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Obx(
-          () => Text("Clicks: ${c.count}"),
-        ),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          child: const Text("Go to Other"),
-          onPressed: () => Get.to(Other()),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: c.increment,
-      ),
-    );
-  }
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  BaseBinding().dependencies();
+  runApp(const ShitGrabberApp());
 }
 
-class Other extends StatelessWidget {
-  final Controller c = Get.find();
-
-  Other({Key? key}) : super(key: key);
+class ShitGrabberApp extends StatelessWidget {
+  const ShitGrabberApp({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  Widget build(context) {
-    return Scaffold(
-      body: Center(
-        child: Text(
-          "${c.count}",
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      title: 'Document grabber app',
+      theme: AppTheme().appThemeDark(context),
+      getPages: [
+        GetPage(
+          name: '/dashboard',
+          page: () => const DashboardScreen(),
+          binding: BaseBinding(),
         ),
-      ),
+      ],
+      initialRoute: '/dashboard',
     );
   }
 }

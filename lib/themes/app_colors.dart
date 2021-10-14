@@ -10,4 +10,11 @@ class AppColors {
   static const Color appBlack = Color(0xFF30363D);
   static const Color error = Color(0xFFF30070);
   static const Color appWhite = Color(0xFFE5E5E5);
+
+  // app gradient
+  static const gradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [primary, secondary],
+  );
 }
