@@ -1,7 +1,12 @@
 import 'package:get/get.dart';
 
 class Controller extends GetxController {
-  var count = 0.obs;
+  RxInt count = 0.obs;
 
-  increment() => count++;
+  void increment() => count++;
+
+  void reset() {
+    count.value = 0;
+    update();
+  }
 }
