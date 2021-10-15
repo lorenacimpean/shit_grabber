@@ -1,5 +1,5 @@
 class AppStrings {
-  //Navigation
+  // Navigation/Screen titles
   static const String dashboard = "Dashboard";
   static const String loadDocuments = "Load documents";
   static const String takePhoto = "Take a photo";

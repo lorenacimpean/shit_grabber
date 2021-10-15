@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 import 'package:get/get_instance/src/bindings_interface.dart';
-import 'package:shit_grabber/controllers/base_controlles.dart';
+import 'package:shit_grabber/controllers/home_controller.dart';
 
-class BaseBinding extends Bindings {
+class HomeBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put(BaseController());
+    Get.put(HomeController());
   }
 }
