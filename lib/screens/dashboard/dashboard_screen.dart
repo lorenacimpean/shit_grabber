@@ -12,14 +12,16 @@ class DashboardScreen extends GetView<DashboardController> {
   Widget build(BuildContext context) {
     return Container(
       height: double.infinity,
-      decoration: const BoxDecoration(
-        gradient: AppColors.gradient,
+      decoration: BoxDecoration(
+        gradient: AppColors.gradientWithOpacity,
       ),
       child: ListView.builder(
         shrinkWrap: true,
         itemCount: controller.documentTitles.length,
         itemBuilder: (context, index) => DocumentCard(
           title: controller.documentTitles[index],
+          onDelete: () => print("Tapped delete"),
+          onEdit: () => print("Tapped edit"),
         ),
       ),
     );

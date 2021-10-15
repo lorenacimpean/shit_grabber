@@ -6,15 +6,22 @@ import 'package:shit_grabber/themes/app_text_theme.dart';
 
 class DocumentCard extends StatelessWidget {
   final String title;
+  final VoidCallback onEdit;
+  final VoidCallback onDelete;
 
-  const DocumentCard({Key? key, required this.title}) : super(key: key);
+  const DocumentCard({
+    Key? key,
+    required this.title,
+    required this.onEdit,
+    required this.onDelete,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.symmetric(
           horizontal: AppDimensions.largePadding,
-          vertical: AppDimensions.midPadding),
+          vertical: AppDimensions.smallPadding),
       color: AppColors.appBlack.withOpacity(0.8),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppDimensions.defaultRadius),
@@ -34,30 +41,37 @@ class DocumentCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  margin: const EdgeInsets.all(AppDimensions.midPadding),
+                  margin: const EdgeInsets.only(
+                    top: AppDimensions.midPadding,
+                    right: AppDimensions.midPadding,
+                    left: AppDimensions.midPadding,
+                  ),
                   child: Text(
                     title,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextTheme.darkTextTheme.headline3,
+                    style: AppTextTheme.darkTextTheme.headline3
+                        ?.copyWith(color: AppColors.grey),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(right: AppDimensions.smallPadding),
+                  padding: EdgeInsets.only(
+                    right: AppDimensions.smallPadding,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       TextButton(
-                        onPressed: () => print("tapped edit"),
+                        onPressed: () => onEdit,
                         child: Text(
                           "Edit",
                           style: AppTextTheme.darkTextTheme.bodyText1?.copyWith(
                               fontWeight: FontWeight.bold,
-                              color: AppColors.secondary),
+                              color: AppColors.tertiary),
                         ),
                       ),
                       TextButton(
-                        onPressed: () => print("tapped delete"),
+                        onPressed: onDelete,
                         child: Text(
                           "Delete",
                           style: AppTextTheme.darkTextTheme.bodyText1?.copyWith(

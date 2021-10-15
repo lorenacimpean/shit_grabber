@@ -12,9 +12,14 @@ class AppColors {
   static const Color appWhite = Color(0xFFE5E5E5);
 
   // app gradient
-  static const gradient = LinearGradient(
+  static const LinearGradient gradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [primary, secondary],
+  );
+  static LinearGradient gradientWithOpacity = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [primary.withOpacity(0.7), secondary.withOpacity(0.7)],
   );
 }
