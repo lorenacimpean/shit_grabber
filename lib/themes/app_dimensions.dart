@@ -7,7 +7,12 @@ class AppDimensions {
   static const double bodyTextSize = 14.0;
 
   //Paddings
+  static const double largePadding = 30.0;
   static const double defaultPadding = 24.0;
   static const double midPadding = 16.0;
   static const double smallPadding = 10.0;
+
+  // Radius
+
+  static const double defaultRadius = 10.0;
 }
