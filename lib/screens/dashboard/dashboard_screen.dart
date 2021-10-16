@@ -10,19 +10,29 @@ class DashboardScreen extends GetView<DashboardController> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: double.infinity,
-      decoration: BoxDecoration(
-        gradient: AppColors.gradientWithOpacity,
-      ),
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: controller.documentTitles.length,
-        itemBuilder: (context, index) => DocumentCard(
-          title: controller.documentTitles[index],
-          onDelete: () => print("Tapped delete"),
-          onEdit: () => print("Tapped edit"),
+    return Scaffold(
+      body: Container(
+        height: double.infinity,
+        decoration: BoxDecoration(
+          gradient: AppColors.gradientWithOpacity,
         ),
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: controller.documentTitles.length,
+          itemBuilder: (context, index) => DocumentCard(
+            title: controller.documentTitles[index],
+            onDelete: () => print("Tapped delete"),
+            onEdit: () => print("Tapped edit"),
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColors.tertiary,
+        child: Icon(
+          CupertinoIcons.add_circled_solid,
+          color: AppColors.opaqueBlack,
+        ),
+        onPressed: () {},
       ),
     );
   }

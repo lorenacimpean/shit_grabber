@@ -17,6 +17,9 @@ dependencies:
   open_file: ^3.2.1
   flutter_filereader: ^3.0.0
   shared_preferences: ^2.0.8
+  rxdart: ^0.27.2
+  get_storage: ^2.0.3
+  get_rx: ^3.13.0
 
 dev_dependencies:
   flutter_test:

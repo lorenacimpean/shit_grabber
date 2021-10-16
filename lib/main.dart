@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shit_grabber/bindings/base_binding.dart';
 import 'package:shit_grabber/bindings/dashboard_binding.dart';
-import 'package:shit_grabber/screens/dashboard/dashboard_screen.dart';
-import 'package:shit_grabber/screens/home/home_screen.dart';
 import 'package:shit_grabber/themes/app_theme.dart';
+import 'package:shit_grabber/utils/routes.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,18 +22,7 @@ class ShitGrabberApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Document grabber app',
       theme: AppTheme().appThemeDark(context),
-      getPages: [
-        GetPage(
-          name: '/home',
-          page: () => const HomeScreen(),
-          binding: HomeBinding(),
-        ),
-        GetPage(
-          name: '/dashboard',
-          page: () => const DashboardScreen(),
-          binding: DashboardBinding(),
-        ),
-      ],
+      getPages: Routes.routes,
       initialRoute: '/home',
     );
   }

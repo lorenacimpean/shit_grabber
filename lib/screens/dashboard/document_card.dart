@@ -19,10 +19,10 @@ class DocumentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(
+      margin: EdgeInsets.symmetric(
           horizontal: AppDimensions.largePadding,
           vertical: AppDimensions.smallPadding),
-      color: AppColors.appBlack.withOpacity(0.8),
+      color: AppColors.opaqueBlack,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppDimensions.defaultRadius),
       ),
@@ -75,8 +75,9 @@ class DocumentCard extends StatelessWidget {
                         child: Text(
                           "Delete",
                           style: AppTextTheme.darkTextTheme.bodyText1?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primary),
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primary,
+                          ),
                         ),
                       ),
                     ],
