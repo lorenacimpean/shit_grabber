@@ -35,9 +35,9 @@ flutter:
     - assets/
     - fonts/
   fonts:
-    - family: Nunito
+    - family: Roboto
       fonts:
-        - asset: fonts/SpaceMono-Regular.ttf
-        - asset: fonts/SpaceMono-Bold.ttf
-        - asset: fonts/SpaceMono-Italic.ttf
-        - asset: fonts/SpaceMono-BoldItalic.ttf
+        - asset: fonts/Roboto-Bold.ttf
+        - asset: fonts/Roboto-Medium.ttf
+        - asset: fonts/Roboto-Thin.ttf
+        - asset: fonts/Roboto-Regular.ttf
