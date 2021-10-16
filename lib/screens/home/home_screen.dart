@@ -22,7 +22,7 @@ class HomeScreen extends GetView<HomeController> {
         appBar: _buildAppBar,
         body: IndexedStack(
           index: controller.selectedIndex,
-          children: const [
+          children: [
             DashboardScreen(),
             UploadScreen(),
             CameraScreen(),
@@ -45,5 +45,6 @@ class HomeScreen extends GetView<HomeController> {
         )),
         elevation: 0.0,
         backgroundColor: AppColors.appBlack,
+        centerTitle: true,
       );
 }
