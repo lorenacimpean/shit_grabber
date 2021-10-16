@@ -9,7 +9,7 @@ class DashboardController extends SubscriptionState<DashboardController> {
   final FilePickerRepo _filePickerRepo = Get.find<FilePickerRepo>();
   final SharedPrefRepo _sharedPrefRepo = Get.find<SharedPrefRepo>();
   RxList<String> documentTitles = RxList<String>();
-  late RxList<DocumentModel> documents;
+  RxList<DocumentModel> documents = RxList<DocumentModel>();
 
   @override
   void onInit() {
