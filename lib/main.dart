@@ -7,9 +7,8 @@ import 'package:shit_grabber/utils/routes.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  HomeBinding().dependencies();
   DashboardBinding().dependencies();
-  runApp(const ShitGrabberApp());
+  runApp(ShitGrabberApp());
 }
 
 class ShitGrabberApp extends StatelessWidget {
@@ -23,7 +22,10 @@ class ShitGrabberApp extends StatelessWidget {
       title: 'Document grabber app',
       theme: AppTheme().appThemeDark(context),
       getPages: Routes.routes,
-      initialRoute: '/home',
+      initialRoute: Routes.homeRoute,
+      initialBinding: HomeBinding(),
+      transitionDuration: Duration(milliseconds: 200),
+      defaultTransition: Transition.cupertino,
     );
   }
 }

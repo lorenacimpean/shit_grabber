@@ -10,26 +10,6 @@ import 'package:shit_grabber/repo/shared_pref_repo.dart';
 class FilePickerRepo {
   final SharedPrefRepo _sharedPrefRepo = Get.find<SharedPrefRepo>();
 
-  FilePickerRepo();
-
-  void pickFiles2() async {
-    FilePickerResult? result =
-        await FilePicker.platform.pickFiles(allowMultiple: true);
-
-    if (result != null) {
-      List<File> files = result.paths.map((path) => File(path!)).toList();
-      PlatformFile file = result.files.first;
-
-      print(file.name);
-      print(file.bytes);
-      print(file.size);
-      print(file.extension);
-      print(file.path);
-    } else {
-      // User canceled the picker
-    }
-  }
-
   Stream<List<PlatformFile>> get _selectedFiles {
     return FilePicker.platform
         .pickFiles(allowMultiple: true)

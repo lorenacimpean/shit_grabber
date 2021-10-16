@@ -16,13 +16,15 @@ class DashboardScreen extends GetView<DashboardController> {
         decoration: BoxDecoration(
           gradient: AppColors.gradientWithOpacity,
         ),
-        child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: controller.documentTitles.length,
-          itemBuilder: (context, index) => DocumentCard(
-            title: controller.documentTitles[index],
-            onDelete: () => print("Tapped delete"),
-            onEdit: () => print("Tapped edit"),
+        child: Obx(
+          () => ListView.builder(
+            shrinkWrap: true,
+            itemCount: controller.documentTitles.value.length,
+            itemBuilder: (context, index) => DocumentCard(
+              title: controller.documentTitles.value[index],
+              onDelete: () => print('Tapped delete'),
+              onEdit: () => print('Tapped edit'),
+            ),
           ),
         ),
       ),

@@ -34,7 +34,7 @@ class SharedPrefRepo {
 
   Stream<List<String>?> getStringList(String key) {
     return _initSharedPreferences().map((_sharedPreferences) {
-      print('SharedPrefRepo : GETTING THE LIST FOR KEY $key : ');
+      print('SharedPrefRepo : GETTING THE LIST FOR KEY $key ');
       return _sharedPreferences.getStringList(key);
     });
   }
