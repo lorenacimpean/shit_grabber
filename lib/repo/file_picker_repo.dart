@@ -14,22 +14,16 @@ class FilePickerRepo {
     return FilePicker.platform
         .pickFiles(allowMultiple: true)
         .asStream()
-        .map((result) {
-      return result != null ? result.files : [];
-    });
+        .map((result) => result != null ? result.files : []);
   }
 
-  Stream<List<DocumentModel>> pickFiles() {
-    return _selectedFiles.flatMap((list) {
-      List<DocumentModel> fileList =
-          list.map((file) => DocumentModel.fromPlatformFile(file)).toList();
-      List<String> filesStringList =
-          fileList.map((doc) => jsonEncode(doc)).toList();
-      return _sharedPrefRepo
-          .addStringsToList(ApiKeys.documentList, filesStringList)
-          .map((_) {
-        return fileList;
+  Stream<List<DocumentModel>> pickFiles() => _selectedFiles.flatMap((list) {
+        List<DocumentModel> fileList =
+            list.map((file) => DocumentModel.fromPlatformFile(file)).toList();
+        List<String> filesStringList =
+            fileList.map((doc) => jsonEncode(doc)).toList();
+        return _sharedPrefRepo
+            .addStringsToList(ApiKeys.documentList, filesStringList)
+            .map((_) => fileList);
       });
-    });
-  }
 }

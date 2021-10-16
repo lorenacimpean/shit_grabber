@@ -29,10 +29,10 @@ class DashboardController extends SubscriptionState<DashboardController> {
 
   void addDocuments() {
     disposeLater(_filePickerRepo.pickFiles().listen((selectedFiles) {
-      ;
       selectedFiles.map((file) {
         if (documents.contains(file)) {
           //TODO: check how to handle this (toast, loading state, error handling state)
+          // also check RxState management stuff
           debugPrint('Element Already present in the dashboard');
         }
         return _sharedPrefRepo.addStringsToList(

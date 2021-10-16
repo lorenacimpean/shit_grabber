@@ -4,6 +4,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:shit_grabber/controllers/dashboard_controller.dart';
 import 'package:shit_grabber/screens/dashboard/document_card.dart';
 import 'package:shit_grabber/themes/app_colors.dart';
+import 'package:shit_grabber/themes/app_dimensions.dart';
 
 class DashboardScreen extends GetView<DashboardController> {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -25,13 +26,15 @@ class DashboardScreen extends GetView<DashboardController> {
               onDelete: () {
                 controller.deleteDocument(controller.documents[index].name);
               },
+              //TODO: check if can edit document name
               onEdit: () => print('Tapped edit'),
             ),
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.tertiary.withOpacity(0.8),
+        backgroundColor:
+            AppColors.tertiary.withOpacity(AppDimensions.defaultOpacity),
         child: Icon(
           CupertinoIcons.add_circled_solid,
           color: AppColors.opaqueBlack,

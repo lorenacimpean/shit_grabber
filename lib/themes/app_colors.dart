@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:shit_grabber/themes/app_dimensions.dart';
 
 class AppColors {
   static const Color primary = Color(0xFFF27A54);
@@ -10,7 +11,7 @@ class AppColors {
   static const Color appBlack = Color(0xFF30363D);
   static const Color error = Color(0xFFF30070);
   static const Color appWhite = Color(0xFFE5E5E5);
-  static Color opaqueBlack = appBlack.withOpacity(0.8);
+  static Color opaqueBlack = appBlack.withOpacity(AppDimensions.defaultOpacity);
 
   // app gradient
   static const LinearGradient gradient = LinearGradient(
@@ -21,6 +22,9 @@ class AppColors {
   static LinearGradient gradientWithOpacity = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [primary.withOpacity(0.7), secondary.withOpacity(0.7)],
+    colors: [
+      primary.withOpacity(AppDimensions.defaultOpacity),
+      secondary.withOpacity(AppDimensions.defaultOpacity),
+    ],
   );
 }
