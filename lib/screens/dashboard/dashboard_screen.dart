@@ -4,7 +4,6 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:shit_grabber/controllers/dashboard_controller.dart';
 import 'package:shit_grabber/screens/dashboard/document_card.dart';
 import 'package:shit_grabber/themes/app_colors.dart';
-import 'package:shit_grabber/themes/app_dimensions.dart';
 
 class DashboardScreen extends GetView<DashboardController> {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -33,8 +32,7 @@ class DashboardScreen extends GetView<DashboardController> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor:
-            AppColors.tertiary.withOpacity(AppDimensions.defaultOpacity),
+        backgroundColor: AppColors.opaqueGreen,
         child: Icon(
           CupertinoIcons.add_circled_solid,
           color: AppColors.opaqueBlack,

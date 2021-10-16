@@ -12,6 +12,7 @@ class AppColors {
   static const Color error = Color(0xFFF30070);
   static const Color appWhite = Color(0xFFE5E5E5);
   static Color opaqueBlack = appBlack.withOpacity(AppDimensions.defaultOpacity);
+  static Color opaqueGreen = tertiary.withOpacity(AppDimensions.defaultOpacity);
 
   // app gradient
   static const LinearGradient gradient = LinearGradient(
