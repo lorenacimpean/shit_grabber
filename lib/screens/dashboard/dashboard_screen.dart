@@ -19,17 +19,19 @@ class DashboardScreen extends GetView<DashboardController> {
         child: Obx(
           () => ListView.builder(
             shrinkWrap: true,
-            itemCount: controller.documentTitles.value.length,
+            itemCount: controller.documents.length,
             itemBuilder: (context, index) => DocumentCard(
-              title: controller.documentTitles.value[index],
-              onDelete: () => print('Tapped delete'),
+              title: controller.documents[index].name,
+              onDelete: () {
+                controller.deleteDocument(controller.documents[index].name);
+              },
               onEdit: () => print('Tapped edit'),
             ),
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.tertiary,
+        backgroundColor: AppColors.tertiary.withOpacity(0.8),
         child: Icon(
           CupertinoIcons.add_circled_solid,
           color: AppColors.opaqueBlack,

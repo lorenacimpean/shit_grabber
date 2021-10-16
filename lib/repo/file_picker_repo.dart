@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:convert';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
@@ -23,10 +23,11 @@ class FilePickerRepo {
     return _selectedFiles.flatMap((list) {
       List<DocumentModel> fileList =
           list.map((file) => DocumentModel.fromPlatformFile(file)).toList();
-      List<String> fileNames = fileList.map((doc) => doc.name).toList();
+      List<String> filesStringList =
+          fileList.map((doc) => jsonEncode(doc)).toList();
       return _sharedPrefRepo
-          .addStringsToList(ApiKeys.documentList, fileNames)
-          .map((event) {
+          .addStringsToList(ApiKeys.documentList, filesStringList)
+          .map((_) {
         return fileList;
       });
     });
