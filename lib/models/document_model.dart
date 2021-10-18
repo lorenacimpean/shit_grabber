@@ -4,7 +4,7 @@ import 'package:shit_grabber/repo/api_keys.dart';
 
 class DocumentModel extends SerializableModel {
   final String name;
-  final String? path;
+  final String path;
 
   DocumentModel({
     required this.name,
@@ -13,7 +13,7 @@ class DocumentModel extends SerializableModel {
 
   factory DocumentModel.fromPlatformFile(PlatformFile file) => DocumentModel(
         name: file.name,
-        path: file.path,
+        path: file.path ?? '',
       );
 
   factory DocumentModel.fromJson(Map<String, dynamic> json) {

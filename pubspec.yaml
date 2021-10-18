@@ -14,12 +14,10 @@ dependencies:
   cupertino_icons: ^1.0.3
   path_provider: ^2.0.5
   file_picker: ^4.1.4
-  open_file: ^3.2.1
-  flutter_filereader: ^3.0.0
   shared_preferences: ^2.0.8
   rxdart: ^0.27.2
-  get_storage: ^2.0.3
   get_rx: ^3.13.0
+  flutter_pdfview: ^1.2.1
 
 dev_dependencies:
   flutter_test:

@@ -6,7 +6,10 @@ import 'package:shit_grabber/themes/app_colors.dart';
 class GradientWidget extends StatelessWidget {
   final Widget child;
 
-  const GradientWidget(this.child, {Key? key}) : super(key: key);
+  const GradientWidget({
+    required this.child,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
