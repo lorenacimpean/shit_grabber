@@ -5,13 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:get/get.dart';
 import 'package:shit_grabber/controllers/file_preview_controller.dart';
+import 'package:shit_grabber/models/document_model.dart';
 import 'package:shit_grabber/themes/app_colors.dart';
+import 'package:shit_grabber/themes/app_text_theme.dart';
 import 'package:shit_grabber/widgets/app_error_widget.dart';
 import 'package:shit_grabber/widgets/gradient_widget.dart';
 import 'package:shit_grabber/widgets/loading_widget.dart';
 
 class FilePreviewScreen extends GetView<FilePreviewController> {
-  final path = Get.arguments as String;
+  final DocumentModel documentModel = Get.arguments as DocumentModel;
 
   FilePreviewScreen({
     Key? key,
@@ -33,6 +35,16 @@ class FilePreviewScreen extends GetView<FilePreviewController> {
       );
 
   PreferredSizeWidget _buildAppBar() => AppBar(
+        backgroundColor: Colors.transparent,
+        title: GradientWidget(
+          child: Text(
+            documentModel.name,
+            style: AppTextTheme.darkTextTheme.headline4!
+                .copyWith(letterSpacing: 2),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        centerTitle: true,
         elevation: 0.0,
         leading: GestureDetector(
           onTap: () => Get.back(),
@@ -63,18 +75,18 @@ class FilePreviewScreen extends GetView<FilePreviewController> {
 
   Widget _buildImagePreview() {
     return Center(
-      child: Image.file(File(path)),
+      child: Image.file(File(documentModel.path)),
     );
   }
 
   Widget _buildPdfWidget() => PDFView(
-        filePath: path,
+        filePath: documentModel.path,
         enableSwipe: true,
         swipeHorizontal: true,
         autoSpacing: false,
         pageFling: true,
         pageSnap: true,
-        fitPolicy: FitPolicy.BOTH,
+        fitPolicy: FitPolicy.HEIGHT,
         preventLinkNavigation:
             false, // if set to true the link is handled in flutter
       );

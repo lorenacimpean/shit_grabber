@@ -23,7 +23,7 @@ class Routes {
       binding: DashboardBinding(),
     ),
     GetPage(
-      name: '$filePreviewRoute/:path',
+      name: '$filePreviewRoute/:documentModel',
       page: () => FilePreviewScreen(),
       binding: FilePreviewBinding(),
     ),

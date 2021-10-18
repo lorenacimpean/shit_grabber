@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:get/get.dart';
+import 'package:shit_grabber/models/document_model.dart';
 import 'package:shit_grabber/utils/subscription_state.dart';
 
 enum FileTypes { pdf, img, none }
@@ -14,7 +15,8 @@ class FilePreviewController extends SubscriptionState<FilePreviewController> {
   @override
   void onInit() {
     super.onInit();
-    _path = Get.arguments;
+    DocumentModel documentModel = Get.arguments;
+    _path = documentModel.path;
     _file = File(_path);
     fileType = Rx<FileTypes>(FileTypes.none);
     _checkFile();

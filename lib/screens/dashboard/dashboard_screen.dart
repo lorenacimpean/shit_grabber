@@ -32,7 +32,7 @@ class DashboardScreen extends GetView<DashboardController> {
                 //TODO: check if can edit document name
                 onEdit: () => print('Tapped edit'),
                 onTap: () => Get.to(() => FilePreviewScreen(),
-                    arguments: controller.documents[index].path,
+                    arguments: controller.documents[index],
                     binding: FilePreviewBinding())),
           ),
           // onLoading: LoadingWidget(),
