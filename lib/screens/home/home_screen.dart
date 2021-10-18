@@ -38,10 +38,11 @@ class HomeScreen extends GetView<HomeController> {
   }
 
   AppBar get _buildAppBar => AppBar(
-        title: GradientWidget(Text(
+        title: GradientWidget(
+            child: Text(
           controller.screenTitle,
           style: AppTextTheme.darkTextTheme.headline2
-              ?.copyWith(letterSpacing: 2.0),
+              ?.copyWith(letterSpacing: 2.5),
         )),
         elevation: 0.0,
         backgroundColor: AppColors.appBlack,

@@ -20,63 +20,48 @@ class DashboardController extends SubscriptionState<DashboardController> {
     disposeLater(_sharedPrefRepo
         .getStringList(ApiKeys.documentList)
         .listen((stringList) {
+      change(null, status: RxStatus.loading());
       List<DocumentModel> fileList = stringList.map((fileString) {
         return DocumentModel.fromJson(jsonDecode(fileString));
       }).toList();
-      documents.assignAll(fileList.obs);
+      documents.value = fileList;
+      change(fileList, status: RxStatus.success());
     }));
   }
 
   void addDocuments() {
-    disposeLater(_filePickerRepo.pickFiles().listen((selectedFiles) {
-      selectedFiles.map((file) {
-        if (documents.contains(file)) {
-          //TODO: check how to handle this (toast, loading state, error handling state)
-          // also check RxState management stuff
-          debugPrint('Element Already present in the dashboard');
-        }
-        return _sharedPrefRepo.addStringsToList(
-          ApiKeys.documentList,
-          getStringList(selectedFiles),
-        );
-      });
-      List<DocumentModel> newList = documents..addAll(selectedFiles);
-      documents.assignAll(newList.obs.toSet().toList());
-    }));
+    disposeLater(
+      _filePickerRepo.pickFiles().listen((selectedFiles) {
+        change(null, status: RxStatus.loading());
+        selectedFiles.map((file) {
+          if (documents.contains(file)) {
+            debugPrint('Element Already present in the dashboard');
+          }
+          return _sharedPrefRepo.addStringsToList(
+            ApiKeys.documentList,
+            getStringList(selectedFiles),
+          );
+        });
+        List<DocumentModel> newList = documents..addAll(selectedFiles);
+        //documents.assignAll(newList.obs);
+        change(newList, status: RxStatus.success());
+      })
+        ..onError((error) => change(RxStatus.error(error))),
+    );
   }
 
   void deleteDocument(String title) {
+    change(null, status: RxStatus.loading());
     List<DocumentModel> updatedList = documents
       ..removeWhere((d) => d.name == title);
     disposeLater(_sharedPrefRepo
         .setStringList(ApiKeys.documentList, getStringList(updatedList))
         .listen((_) {
-      documents.assignAll(updatedList.obs);
+      change(updatedList, status: RxStatus.success());
     }));
   }
 
   List<String> getStringList(List<DocumentModel> docs) {
     return docs.map((e) => jsonEncode(e)).toList();
-  }
-
-  //TODO: check if I really need this
-  @override
-  void onDetached() {
-    print('onDetached');
-  }
-
-  @override
-  void onInactive() {
-    print('onInactive');
-  }
-
-  @override
-  void onPaused() {
-    print('onPaused');
-  }
-
-  @override
-  void onResumed() {
-    print('onResumed');
   }
 }
