@@ -5,21 +5,26 @@ import 'package:shit_grabber/repo/api_keys.dart';
 class DocumentModel extends SerializableModel {
   final String name;
   final String path;
+  final DateTime lastModified;
 
   DocumentModel({
     required this.name,
     required this.path,
+    required this.lastModified,
   });
 
   factory DocumentModel.fromPlatformFile(PlatformFile file) => DocumentModel(
         name: file.name,
         path: file.path ?? '',
+        lastModified: DateTime.now(),
       );
 
   factory DocumentModel.fromJson(Map<String, dynamic> json) {
     return DocumentModel(
       name: json[ApiKeys.name],
       path: json[ApiKeys.path],
+      lastModified:
+          DateTime.tryParse(json[ApiKeys.lastModified]) ?? DateTime.now(),
     );
   }
 
@@ -28,6 +33,7 @@ class DocumentModel extends SerializableModel {
     return {
       ApiKeys.name: name,
       ApiKeys.path: path,
+      ApiKeys.lastModified: lastModified.toString(),
     };
   }
 

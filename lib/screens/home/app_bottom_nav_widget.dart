@@ -45,7 +45,7 @@ class AppBottomNavigationWidget extends StatelessWidget {
       return BottomNavigationBarItem(
         icon: icon == icons[selectedIndex]
             ? Icon(icon)
-            : GradientWidget(
+            : GradientMask(
                 child: Icon(icon),
               ),
         label: labels[selectedIndex],

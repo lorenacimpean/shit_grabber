@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:shit_grabber/controllers/home_controller.dart';
-import 'package:shit_grabber/screens/camera/camera_screen.dart';
+import 'package:shit_grabber/screens/camera/take_picture_screen.dart';
 import 'package:shit_grabber/screens/dashboard/dashboard_screen.dart';
 import 'package:shit_grabber/screens/settings/settings_screen.dart';
 import 'package:shit_grabber/screens/upload/upload_screen.dart';
@@ -25,7 +25,7 @@ class HomeScreen extends GetView<HomeController> {
           children: [
             DashboardScreen(),
             UploadScreen(),
-            CameraScreen(),
+            TakePictureScreen(),
             SettingsScreen(),
           ],
         ),
@@ -38,7 +38,7 @@ class HomeScreen extends GetView<HomeController> {
   }
 
   AppBar get _buildAppBar => AppBar(
-        title: GradientWidget(
+        title: GradientMask(
             child: Text(
           controller.screenTitle,
           style: AppTextTheme.darkTextTheme.headline2

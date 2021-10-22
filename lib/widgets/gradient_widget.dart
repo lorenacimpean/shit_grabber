@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shit_grabber/themes/app_colors.dart';
 
-//TODO: transform this into gradient mask that takes any child and use it for icons
-
-class GradientWidget extends StatelessWidget {
+class GradientMask extends StatelessWidget {
   final Widget child;
 
-  const GradientWidget({
+  const GradientMask({
     required this.child,
     Key? key,
   }) : super(key: key);
