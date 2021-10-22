@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shit_grabber/bindings/base_binding.dart';
+import 'package:shit_grabber/bindings/home_binding.dart';
 import 'package:shit_grabber/bindings/dashboard_binding.dart';
 import 'package:shit_grabber/themes/app_theme.dart';
 import 'package:shit_grabber/utils/routes.dart';

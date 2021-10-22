@@ -36,7 +36,7 @@ class FilePreviewScreen extends GetView<FilePreviewController> {
 
   PreferredSizeWidget _buildAppBar() => AppBar(
         backgroundColor: Colors.transparent,
-        title: GradientWidget(
+        title: GradientMask(
           child: Text(
             documentModel.name,
             style: AppTextTheme.darkTextTheme.headline4!
@@ -48,7 +48,7 @@ class FilePreviewScreen extends GetView<FilePreviewController> {
         elevation: 0.0,
         leading: GestureDetector(
           onTap: () => Get.back(),
-          child: GradientWidget(
+          child: GradientMask(
             child: Icon(CupertinoIcons.back),
           ),
         ),
@@ -64,7 +64,7 @@ class FilePreviewScreen extends GetView<FilePreviewController> {
         body = _buildImagePreview();
         break;
       case FileTypes.none:
-        body = GradientWidget(child: Container());
+        body = GradientMask(child: Container());
         break;
     }
     return Container(
