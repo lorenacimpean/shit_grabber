@@ -19,6 +19,7 @@ dependencies:
   get_rx: ^3.13.0
   flutter_pdfview: ^1.2.1
   camera: ^0.9.4+2
+  qr_flutter: ^4.0.0
 
 dev_dependencies:
   flutter_test:
