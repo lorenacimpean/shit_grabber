@@ -36,8 +36,8 @@ class AppBottomNavigationWidget extends StatelessWidget {
     ];
     List<String> labels = [
       AppStrings.dashboard,
-      AppStrings.shareApp,
       AppStrings.takePhoto,
+      AppStrings.shareApp,
       AppStrings.settings
     ];
 
