@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:shit_grabber/controllers/home_controller.dart';
 import 'package:shit_grabber/screens/camera/take_picture_screen.dart';
 import 'package:shit_grabber/screens/dashboard/dashboard_screen.dart';
+import 'package:shit_grabber/screens/qr/qr_screen.dart';
 import 'package:shit_grabber/screens/settings/settings_screen.dart';
-import 'package:shit_grabber/screens/upload/upload_screen.dart';
 import 'package:shit_grabber/themes/app_colors.dart';
 import 'package:shit_grabber/themes/app_text_theme.dart';
 import 'package:shit_grabber/widgets/gradient_widget.dart';
@@ -27,7 +27,6 @@ class HomeScreen extends GetView<HomeController> {
           selectedIndex: controller.selectedIndex,
           onTabSelected: (tabIndex) {
             controller.selectNavigationItem(tabIndex);
-
           },
         ),
       ),
@@ -39,9 +38,9 @@ class HomeScreen extends GetView<HomeController> {
       case 0:
         return DashboardScreen();
       case 1:
-        return UploadScreen();
-      case 2:
         return TakePictureScreen();
+      case 2:
+        return QrScreen();
       case 3:
         return SettingsScreen();
       default:

@@ -18,8 +18,8 @@ class HomeController extends GetxController {
   String get screenTitle {
     List<String> titles = [
       AppStrings.dashboard,
-      AppStrings.loadDocuments,
       AppStrings.takePhoto,
+      AppStrings.shareApp,
       AppStrings.settings,
     ];
     return titles[selectedIndex];
