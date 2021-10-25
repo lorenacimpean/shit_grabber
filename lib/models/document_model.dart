@@ -37,6 +37,10 @@ class DocumentModel extends SerializableModel {
     };
   }
 
+  void addAllUnique(){
+
+  }
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||

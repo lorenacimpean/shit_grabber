@@ -20,21 +20,33 @@ class HomeScreen extends GetView<HomeController> {
     return GetBuilder<HomeController>(
       builder: (controller) => Scaffold(
         appBar: _buildAppBar,
-        body: IndexedStack(
-          index: controller.selectedIndex,
-          children: [
-            DashboardScreen(),
-            UploadScreen(),
-            TakePictureScreen(),
-            SettingsScreen(),
-          ],
+        body: Container(
+          child: _bodyByIndex,
         ),
         bottomNavigationBar: AppBottomNavigationWidget(
           selectedIndex: controller.selectedIndex,
-          onTabSelected: controller.selectNavigationItem,
+          onTabSelected: (tabIndex) {
+            controller.selectNavigationItem(tabIndex);
+
+          },
         ),
       ),
     );
+  }
+
+  Widget get _bodyByIndex {
+    switch (controller.selectedIndex) {
+      case 0:
+        return DashboardScreen();
+      case 1:
+        return UploadScreen();
+      case 2:
+        return TakePictureScreen();
+      case 3:
+        return SettingsScreen();
+      default:
+        return DashboardScreen();
+    }
   }
 
   AppBar get _buildAppBar => AppBar(

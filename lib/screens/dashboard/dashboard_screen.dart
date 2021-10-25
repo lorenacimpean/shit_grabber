@@ -14,6 +14,8 @@ class DashboardScreen extends GetView<DashboardController> {
 
   @override
   Widget build(BuildContext context) {
+    //need this to refresh the list when navigating back from another main screen
+    controller.onInit();
     return Scaffold(
       body: Container(
         height: double.infinity,
