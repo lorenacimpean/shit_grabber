@@ -6,7 +6,7 @@ import 'package:shit_grabber/repo/camera_repo.dart';
 class TakePictureBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => CameraRepo());
-    Get.lazyPut(() => TakePictureController());
+    Get.put(CameraRepo());
+    Get.put(TakePictureController());
   }
 }

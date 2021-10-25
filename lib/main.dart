@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shit_grabber/bindings/home_binding.dart';
 import 'package:shit_grabber/bindings/dashboard_binding.dart';
+import 'package:shit_grabber/bindings/home_binding.dart';
 import 'package:shit_grabber/themes/app_theme.dart';
 import 'package:shit_grabber/utils/routes.dart';
 
@@ -18,6 +18,7 @@ class ShitGrabberApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomeBinding().dependencies();
     return GetMaterialApp(
       title: 'Document grabber app',
       theme: AppTheme().appThemeDark(context),
@@ -26,6 +27,7 @@ class ShitGrabberApp extends StatelessWidget {
       initialBinding: HomeBinding(),
       transitionDuration: Duration(milliseconds: 200),
       defaultTransition: Transition.cupertino,
+      enableLog: true,
     );
   }
 }

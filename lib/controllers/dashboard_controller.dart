@@ -6,6 +6,7 @@ import 'package:shit_grabber/models/document_model.dart';
 import 'package:shit_grabber/repo/api_keys.dart';
 import 'package:shit_grabber/repo/file_picker_repo.dart';
 import 'package:shit_grabber/repo/shared_pref_repo.dart';
+import 'package:shit_grabber/utils/list_extensions.dart';
 import 'package:shit_grabber/utils/subscription_state.dart';
 
 class DashboardController extends SubscriptionState<DashboardController> {
@@ -42,8 +43,7 @@ class DashboardController extends SubscriptionState<DashboardController> {
             getStringList(selectedFiles),
           );
         });
-        List<DocumentModel> newList = documents..addAll(selectedFiles);
-        //documents.assignAll(newList.obs);
+        List<DocumentModel> newList = documents..addAllUnique(selectedFiles);
         change(newList, status: RxStatus.success());
       })
         ..onError((error) => change(RxStatus.error(error))),

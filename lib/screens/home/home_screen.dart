@@ -20,12 +20,14 @@ class HomeScreen extends GetView<HomeController> {
     return GetBuilder<HomeController>(
       builder: (controller) => Scaffold(
         appBar: _buildAppBar,
-        body: _bodyByIndex,
+        body: Container(
+          child: _bodyByIndex,
+        ),
         bottomNavigationBar: AppBottomNavigationWidget(
           selectedIndex: controller.selectedIndex,
           onTabSelected: (tabIndex) {
             controller.selectNavigationItem(tabIndex);
-            // Get.reset();
+
           },
         ),
       ),
