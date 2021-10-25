@@ -30,13 +30,13 @@ class AppBottomNavigationWidget extends StatelessWidget {
   List<BottomNavigationBarItem> get _navigationItems {
     List<IconData> icons = [
       CupertinoIcons.square_list_fill,
-      CupertinoIcons.upload_circle_fill,
       CupertinoIcons.camera_circle_fill,
+      CupertinoIcons.upload_circle_fill,
       CupertinoIcons.settings
     ];
     List<String> labels = [
       AppStrings.dashboard,
-      AppStrings.loadDocuments,
+      AppStrings.shareApp,
       AppStrings.takePhoto,
       AppStrings.settings
     ];

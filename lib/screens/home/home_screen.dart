@@ -38,9 +38,9 @@ class HomeScreen extends GetView<HomeController> {
       case 0:
         return DashboardScreen();
       case 1:
-        return QrScreen();
-      case 2:
         return TakePictureScreen();
+      case 2:
+        return QrScreen();
       case 3:
         return SettingsScreen();
       default:
