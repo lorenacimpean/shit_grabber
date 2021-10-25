@@ -18,7 +18,7 @@ class TakePictureScreen extends GetView<TakePictureController> {
           children: [
             Listener(
               child: CameraPreview(
-                controller.cameraController,
+                controller.cameraController.value,
                 child: LayoutBuilder(builder:
                     (BuildContext context, BoxConstraints constraints) {
                   return GestureDetector(
