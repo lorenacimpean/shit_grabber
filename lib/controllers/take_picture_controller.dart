@@ -13,7 +13,7 @@ class TakePictureController extends SubscriptionState<TakePictureController> {
   late SharedPrefRepo _sharedPrefRepo;
   late CameraRepo _cameraRepo;
 
-  //TODO: check hot to dispose camera and acheck what happens at resume
+  // TODO: check hot to dispose camera and acheck what happens at resume
   // might need to use lifecycle mixin to handle this
   @override
   void onInit() {
@@ -21,7 +21,6 @@ class TakePictureController extends SubscriptionState<TakePictureController> {
     change(null, status: RxStatus.loading());
     _sharedPrefRepo = Get.find<SharedPrefRepo>();
     _cameraRepo = Get.find<CameraRepo>();
-
     disposeLater(
       _cameraRepo.cameras.listen((list) {
         cameraController = Rx(CameraController(
@@ -40,7 +39,7 @@ class TakePictureController extends SubscriptionState<TakePictureController> {
   void initCameraController() {
     disposeLater(
       _cameraRepo.initCameraController(cameraController.value).listen((_) {
-        change(cameraController, status: RxStatus.success());
+        change(cameraController.value, status: RxStatus.success());
       })
         ..onError((error) {
           if (error is CameraException) {
@@ -67,5 +66,11 @@ class TakePictureController extends SubscriptionState<TakePictureController> {
     ).listen((_) {})
       ..onError(
           (error) => change(error, status: RxStatus.error(error.toString()))));
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    cameraController.value.dispose();
   }
 }
