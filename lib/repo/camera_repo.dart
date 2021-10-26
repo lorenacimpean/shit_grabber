@@ -6,7 +6,6 @@ class CameraRepo {
 
   Stream<void> initCameraController(CameraController cameraController) {
     print('$cameraController');
-
     return cameraController.initialize().asStream();
   }
 

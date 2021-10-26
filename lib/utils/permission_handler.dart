@@ -27,8 +27,7 @@ mixin PermissionHandler {
           },
           onConfirm: openAppSettings,
         ).showDialog();
-        return requestPermission(Permission.storage)
-            .map((result) => permissionGrantedList.contains(result));
+        return Stream.value(false);
       }
     });
   }

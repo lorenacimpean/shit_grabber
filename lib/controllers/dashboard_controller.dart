@@ -15,7 +15,6 @@ class DashboardController extends SubscriptionState<DashboardController>
   late FilePickerRepo _filePickerRepo;
   late SharedPrefRepo _sharedPrefRepo;
   late RxList<DocumentModel> documents;
-  late RxBool hasStoragePermission;
 
   @override
   void onInit() {
@@ -23,50 +22,43 @@ class DashboardController extends SubscriptionState<DashboardController>
     super.onInit();
     _filePickerRepo = Get.find<FilePickerRepo>();
     _sharedPrefRepo = Get.find<SharedPrefRepo>();
-    hasStoragePermission = RxBool(false);
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-    disposeLater(
-      handleStoragePermission().listen((isGranted) {
-        hasStoragePermission.value = isGranted;
-        change(isGranted, status: RxStatus.success());
-      }),
-    );
-
-    if (hasStoragePermission.value) {
-      disposeLater(_sharedPrefRepo
-          .getStringList(ApiKeys.documentList)
-          .listen((stringList) {
-        change(null, status: RxStatus.loading());
-        List<DocumentModel> fileList = stringList.map((fileString) {
-          return DocumentModel.fromJson(jsonDecode(fileString));
-        }).toList();
-        documents.value = fileList;
-        change(fileList, status: RxStatus.success());
-      }));
-    }
+    disposeLater(_sharedPrefRepo
+        .getStringList(ApiKeys.documentList)
+        .listen((stringList) {
+      change(null, status: RxStatus.loading());
+      List<DocumentModel> fileList = stringList.map((fileString) {
+        return DocumentModel.fromJson(jsonDecode(fileString));
+      }).toList();
+      documents.value = fileList;
+      change(fileList, status: RxStatus.success());
+    }));
   }
 
   void addDocuments() {
     disposeLater(
-      _filePickerRepo.pickFiles().listen((selectedFiles) {
-        change(null, status: RxStatus.loading());
-        selectedFiles.map((file) {
-          if (documents.contains(file)) {
-            debugPrint('Element Already present in the dashboard');
-          }
-          return _sharedPrefRepo.addStringsToList(
-            ApiKeys.documentList,
-            getStringList(selectedFiles),
+      handleStoragePermission().listen((isGranted) {
+        if (isGranted) {
+          disposeLater(
+            _filePickerRepo.pickFiles().listen((selectedFiles) {
+              change(null, status: RxStatus.loading());
+              selectedFiles.map((file) {
+                if (documents.contains(file)) {
+                  debugPrint('Element Already present in the dashboard');
+                }
+                return _sharedPrefRepo.addStringsToList(
+                  ApiKeys.documentList,
+                  getStringList(selectedFiles),
+                );
+              });
+              List<DocumentModel> newList = documents
+                ..addAllUnique(selectedFiles);
+              change(newList, status: RxStatus.success());
+            })
+              ..onError(
+                  (error) => change(error, status: RxStatus.error(error))),
           );
-        });
-        List<DocumentModel> newList = documents..addAllUnique(selectedFiles);
-        change(newList, status: RxStatus.success());
-      })
-        ..onError((error) => change(RxStatus.error(error))),
+        }
+      }),
     );
   }
 

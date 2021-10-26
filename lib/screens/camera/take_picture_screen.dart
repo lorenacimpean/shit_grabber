@@ -16,7 +16,7 @@ class TakePictureScreen extends GetView<TakePictureController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.onInit();
+    // controller.onInit();
     return Scaffold(
       body: controller.obx(
         (state) => _buildBody(),
