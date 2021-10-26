@@ -17,30 +17,7 @@ class DashboardScreen extends GetView<DashboardController> {
     //need this to refresh the list when navigating back from another main screen
     controller.onInit();
     return Scaffold(
-      body: Container(
-        height: double.infinity,
-        decoration: BoxDecoration(
-          gradient: AppColors.gradientWithOpacity,
-        ),
-        child: controller.obx(
-          (state) => ListView.builder(
-            shrinkWrap: true,
-            itemCount: controller.documents.length,
-            itemBuilder: (context, index) => DocumentCard(
-                title: controller.documents[index].name,
-                onDelete: () {
-                  controller.deleteDocument(controller.documents[index].name);
-                },
-                //TODO: check if can edit document name
-                onEdit: () => print('Tapped edit'),
-                onTap: () => Get.to(() => FilePreviewScreen(),
-                    arguments: controller.documents[index],
-                    binding: FilePreviewBinding())),
-          ),
-          // onLoading: LoadingWidget(),
-          onError: (error) => AppErrorWidget(errorMessage: error ?? ''),
-        ),
-      ),
+      body: _buildBody(),
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.opaqueGreen,
         child: Icon(
@@ -50,6 +27,33 @@ class DashboardScreen extends GetView<DashboardController> {
         onPressed: () {
           controller.addDocuments();
         },
+      ),
+    );
+  }
+
+  Widget _buildBody() {
+    return Container(
+      height: double.infinity,
+      decoration: BoxDecoration(
+        gradient: AppColors.gradientWithOpacity,
+      ),
+      child: controller.obx(
+        (state) => ListView.builder(
+          shrinkWrap: true,
+          itemCount: controller.documents.length,
+          itemBuilder: (context, index) => DocumentCard(
+              title: controller.documents[index].name,
+              onDelete: () {
+                controller.deleteDocument(controller.documents[index].name);
+              },
+              //TODO: check if can edit document name
+              onEdit: () => print('Tapped edit'),
+              onTap: () => Get.to(() => FilePreviewScreen(),
+                  arguments: controller.documents[index],
+                  binding: FilePreviewBinding())),
+        ),
+        // onLoading: LoadingWidget(),
+        onError: (error) => AppErrorWidget(errorMessage: error ?? ''),
       ),
     );
   }

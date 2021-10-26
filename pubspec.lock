@@ -7,14 +7,14 @@ packages:
       name: _fe_analyzer_shared
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "29.0.0"
+    version: "30.0.0"
   analyzer:
     dependency: "direct dev"
     description:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.6.0"
+    version: "2.7.0"
   async:
     dependency: transitive
     description:
@@ -32,10 +32,12 @@ packages:
   camera:
     dependency: "direct main"
     description:
-      name: camera
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.9.4+2"
+      path: "packages/camera/camera"
+      ref: issue_89578_dev
+      resolved-ref: "4cbe753c4fd494ead8167edc5f664c25806c0fa9"
+      url: "https://github.com/camsim99/plugins.git"
+    source: git
+    version: "0.9.4+3"
   camera_platform_interface:
     dependency: transitive
     description:
@@ -147,7 +149,7 @@ packages:
       name: file_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.1.4"
+    version: "4.1.6"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -303,6 +305,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.11.1"
+  permission_handler:
+    dependency: "direct main"
+    description:
+      name: permission_handler
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "8.2.5"
+  permission_handler_platform_interface:
+    dependency: transitive
+    description:
+      name: permission_handler_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.7.0"
   platform:
     dependency: transitive
     description:

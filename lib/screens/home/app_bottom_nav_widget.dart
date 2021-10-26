@@ -24,6 +24,7 @@ class AppBottomNavigationWidget extends StatelessWidget {
       enableFeedback: true,
       type: BottomNavigationBarType.shifting,
       items: _navigationItems,
+      elevation: 0.0,
     );
   }
 
@@ -43,6 +44,7 @@ class AppBottomNavigationWidget extends StatelessWidget {
 
     return icons.map((icon) {
       return BottomNavigationBarItem(
+        backgroundColor: AppColors.appBlack,
         icon: icon == icons[selectedIndex]
             ? Icon(icon)
             : GradientMask(

@@ -1,5 +1,4 @@
 import 'package:camera/camera.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:shit_grabber/models/document_model.dart';
 
 class CameraRepo {
@@ -7,10 +6,8 @@ class CameraRepo {
 
   Stream<void> initCameraController(CameraController cameraController) {
     print('$cameraController');
-    return cameraController
-        .initialize()
-        .asStream()
-        .onErrorReturnWith((error, stackTrace) => error);
+
+    return cameraController.initialize().asStream();
   }
 
   Stream<DocumentModel> takePicture(CameraController cameraController) =>

@@ -13,7 +13,6 @@ class TakePictureController extends SubscriptionState<TakePictureController> {
   late SharedPrefRepo _sharedPrefRepo;
   late CameraRepo _cameraRepo;
 
-
   //TODO: check hot to dispose camera and acheck what happens at resume
   // might need to use lifecycle mixin to handle this
   @override
@@ -33,7 +32,8 @@ class TakePictureController extends SubscriptionState<TakePictureController> {
         ));
         initCameraController();
       })
-        ..onError((error) => change(RxStatus.error(error))),
+        ..onError(
+            (error) => change(error, status: RxStatus.error(error.toString()))),
     );
   }
 
@@ -42,20 +42,30 @@ class TakePictureController extends SubscriptionState<TakePictureController> {
       _cameraRepo.initCameraController(cameraController.value).listen((_) {
         change(cameraController, status: RxStatus.success());
       })
-        ..onError((error) => change(RxStatus.error(error))),
+        ..onError((error) {
+          if (error is CameraException) {
+            change(error, status: RxStatus.error(error.description));
+          } else {
+            change(error, status: RxStatus.error(error.toString()));
+          }
+        }),
     );
   }
 
   void snapPhoto() => disposeLater(
         _cameraRepo.takePicture(cameraController.value).listen((documentModel) {
           saveToSharedPref(documentModel);
-        }),
+        })
+          ..onError((error) =>
+              change(error, status: RxStatus.error(error.toString()))),
       );
 
   void saveToSharedPref(DocumentModel documentModel) {
     disposeLater(_sharedPrefRepo.addStringsToList(
       ApiKeys.documentList,
       [jsonEncode(documentModel)],
-    ).listen((_) {}));
+    ).listen((_) {})
+      ..onError(
+          (error) => change(error, status: RxStatus.error(error.toString()))));
   }
 }
