@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shit_grabber/controllers/take_picture_controller.dart';
 import 'package:shit_grabber/themes/app_colors.dart';
@@ -16,7 +17,6 @@ class TakePictureScreen extends GetView<TakePictureController> {
 
   @override
   Widget build(BuildContext context) {
-    // controller.onInit();
     return Scaffold(
       body: controller.obx(
         (state) => _buildBody(),
@@ -44,12 +44,18 @@ class TakePictureScreen extends GetView<TakePictureController> {
       Align(
         alignment: Alignment.bottomCenter,
         child: Container(
+          margin: EdgeInsets.only(bottom: AppDimensions.defaultPadding / 2),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             gradient: AppColors.gradient,
           ),
           child: IconButton(
-            onPressed: () => controller.snapPhoto(),
+            onPressed: () {
+              //check if this works if adding longer debounce on stream
+              //also need a way to show loading while taking photo
+              Debouncer(delay: Duration(seconds: 5))
+                  .call(() => controller.snapPhoto());
+            },
             icon: Icon(Icons.camera_alt),
           ),
         ),
