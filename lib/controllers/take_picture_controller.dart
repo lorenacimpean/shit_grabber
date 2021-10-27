@@ -13,8 +13,6 @@ class TakePictureController extends SubscriptionState<TakePictureController> {
   late SharedPrefRepo _sharedPrefRepo;
   late CameraRepo _cameraRepo;
 
-  // TODO: check hot to dispose camera and acheck what happens at resume
-  // might need to use lifecycle mixin to handle this
   @override
   void onInit() {
     super.onInit();
@@ -23,12 +21,14 @@ class TakePictureController extends SubscriptionState<TakePictureController> {
     _cameraRepo = Get.find<CameraRepo>();
     disposeLater(
       _cameraRepo.cameras.listen((list) {
-        cameraController = Rx(CameraController(
-          list.first,
-          ResolutionPreset.medium,
-          enableAudio: false,
-          imageFormatGroup: ImageFormatGroup.jpeg,
-        ));
+        cameraController = Rx(
+          CameraController(
+            list.first,
+            ResolutionPreset.medium,
+            enableAudio: false,
+            imageFormatGroup: ImageFormatGroup.jpeg,
+          ),
+        );
         initCameraController();
       })
         ..onError(
@@ -39,6 +39,8 @@ class TakePictureController extends SubscriptionState<TakePictureController> {
   void initCameraController() {
     disposeLater(
       _cameraRepo.initCameraController(cameraController.value).listen((_) {
+        disposeLater(
+            _cameraRepo.disableFlash(cameraController.value).listen((_) {}));
         change(cameraController.value, status: RxStatus.success());
       })
         ..onError((error) {
@@ -51,13 +53,18 @@ class TakePictureController extends SubscriptionState<TakePictureController> {
     );
   }
 
-  void snapPhoto() => disposeLater(
-        _cameraRepo.takePicture(cameraController.value).listen((documentModel) {
-          saveToSharedPref(documentModel);
-        })
-          ..onError((error) =>
-              change(error, status: RxStatus.error(error.toString()))),
-      );
+  void snapPhoto() {
+    change(null, status: RxStatus.loading());
+    disposeLater(
+      _cameraRepo.takePicture(cameraController.value).listen((documentModel) {
+        saveToSharedPref(documentModel);
+      })
+        ..onError((error) {
+          change(error, status: RxStatus.error(error.toString()));
+        }),
+    );
+    change(cameraController.value, status: RxStatus.success());
+  }
 
   void saveToSharedPref(DocumentModel documentModel) {
     disposeLater(_sharedPrefRepo.addStringsToList(

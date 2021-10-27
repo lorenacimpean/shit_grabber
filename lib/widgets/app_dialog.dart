@@ -27,27 +27,26 @@ class AppDialog {
             .copyWith(color: AppColors.primary),
         titlePadding: EdgeInsets.all(AppDimensions.defaultPadding),
         content: Padding(
-          padding: EdgeInsets.all(AppDimensions.defaultPadding),
+          padding: EdgeInsets.all(AppDimensions.smallPadding),
           child: GradientMask(
             child: Text(
               contentText,
-              style: AppTextTheme.darkTextTheme.headline4,
-              textAlign: TextAlign.start,
+              style: AppTextTheme.darkTextTheme.headline2,
+              textAlign: TextAlign.center,
             ),
           ),
         ),
-        middleText: '',
-        textConfirm: 'OK',
-        textCancel: 'cancel',
+        textConfirm: AppStrings.ok,
+        textCancel: AppStrings.cancel,
         confirm: TextButton(
             onPressed: onConfirm,
             child: Text(AppStrings.ok,
-                style: AppTextTheme.darkTextTheme.headline4!
+                style: AppTextTheme.darkTextTheme.headline2!
                     .copyWith(color: AppColors.tertiary))),
         cancel: TextButton(
             onPressed: onCancel,
             child: Text(AppStrings.cancel,
-                style: AppTextTheme.darkTextTheme.headline4!
+                style: AppTextTheme.darkTextTheme.headline2!
                     .copyWith(color: AppColors.primary))),
         onConfirm: onConfirm,
         onCancel: onCancel,
