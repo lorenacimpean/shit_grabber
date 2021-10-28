@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shit_grabber/screens/settings/option_card.dart';
 import 'package:shit_grabber/themes/app_colors.dart';
+import 'package:shit_grabber/utils/routes.dart';
 
 class SettingsScreen extends StatelessWidget {
   SettingsScreen({Key? key}) : super(key: key);
@@ -21,7 +23,7 @@ class SettingsScreen extends StatelessWidget {
       child: ListView.builder(
         itemBuilder: (ctx, i) {
           return SettingsOption(
-            onTap: () => print('test'),
+            onTap: () => Get.toNamed(Routes.signUp),
             title: titles[i],
           );
         },
