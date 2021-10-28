@@ -45,8 +45,10 @@ class SettingsOption extends StatelessWidget {
                   title,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextTheme.darkTextTheme.headline3
-                      ?.copyWith(color: AppColors.grey),
+                  style: AppTextTheme.darkTextTheme.headline3?.copyWith(
+                    color: AppColors.grey,
+                    letterSpacing: 2.0,
+                  ),
                 ),
               ),
             ),
