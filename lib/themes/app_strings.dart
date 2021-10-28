@@ -9,10 +9,8 @@ class AppStrings {
   // Permissions
   static const String cameraPermission =
       'The app needs camera permission in order to take photos.';
-
   static const String storagePermission =
       'The app needs storage permission in order access files and display them in the list.';
-
   static const String goToSettings =
       'Please go to device settings and grant permission.';
   static const String ok = 'OK';
