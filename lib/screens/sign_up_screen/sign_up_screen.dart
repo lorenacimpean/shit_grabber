@@ -27,7 +27,6 @@ class SignUpScreen extends GetView<SignUpController> {
         child: Form(
           child: controller.obx(
               (state) => ListView(
-                    // physics: NeverScrollableScrollPhysics(),
                     children: [
                       Container(height: 200),
                       ListView.builder(
@@ -35,11 +34,12 @@ class SignUpScreen extends GetView<SignUpController> {
                         shrinkWrap: true,
                         itemCount: controller.fields.length,
                         itemBuilder: (ctx, i) =>
+                            //TODO: implement obscure text
                             AppTextInput(formField: controller.fields[i]),
                       ),
                       controller.isPasswordIdentical.value
                           ? Container()
-                          : ErrorWidget(),
+                          : ConfirmPasswordErrorWidget(),
                       _buildSubmitButton(),
                     ],
                   ),
@@ -59,7 +59,7 @@ class SignUpScreen extends GetView<SignUpController> {
       );
 }
 
-class ErrorWidget extends StatelessWidget {
+class ConfirmPasswordErrorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(

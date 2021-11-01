@@ -6,7 +6,7 @@ import 'package:shit_grabber/themes/app_dimensions.dart';
 
 class AppTextInput extends StatelessWidget {
   final FormFieldModel formField;
-  final VoidCallback? onTextObscureToggle;
+  final ValueChanged<bool>? onTextObscureToggle;
 
   AppTextInput({
     Key? key,
@@ -39,10 +39,10 @@ class AppTextInput extends StatelessWidget {
             ),
             if (formField.isTextObscured ?? false)
               Positioned(
-                right: AppDimensions.smallPadding / 2,
+                right: 0,
                 child: IconButton(
                   icon: Icon(CupertinoIcons.ant_circle_fill),
-                  onPressed: onTextObscureToggle,
+                  onPressed: () => onTextObscureToggle,
                 ),
               ),
           ],

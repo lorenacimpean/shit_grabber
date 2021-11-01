@@ -17,8 +17,9 @@ class SignUpController extends SubscriptionState<SignUpController> {
   void _initFields() {
     List<FormFieldModel> list =
         FieldType.values.map((t) => FormFieldModel.fromType(t)).toList();
-    fields = RxList<FormFieldModel>(list);
-    change(fields.value, status: RxStatus.success());
+    fields = list.obs;
+
+    change(fields, status: RxStatus.success());
   }
 
   void validateConfirmPassword() {
