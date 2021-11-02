@@ -1,14 +1,33 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shit_grabber/screens/settings/option_card.dart';
 import 'package:shit_grabber/themes/app_colors.dart';
+import 'package:shit_grabber/utils/routes.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+  SettingsScreen({Key? key}) : super(key: key);
 
+  List<String> titles = ['Sync to cloud', 'Drop a message'];
+
+//todo: add sync files with firestore
+  //check how to save images from cache
+//todo: add firebase login
+//todo: drop a message to creator
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        gradient: AppColors.gradient,
+      decoration: BoxDecoration(
+        gradient: AppColors.gradientWithOpacity,
+      ),
+      child: ListView.builder(
+        itemBuilder: (ctx, i) {
+          return SettingsOption(
+            onTap: () => Get.toNamed(Routes.signUp),
+            title: titles[i],
+          );
+        },
+        itemCount: titles.length,
       ),
     );
   }

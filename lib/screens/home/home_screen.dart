@@ -6,9 +6,7 @@ import 'package:shit_grabber/screens/camera/take_picture_screen.dart';
 import 'package:shit_grabber/screens/dashboard/dashboard_screen.dart';
 import 'package:shit_grabber/screens/qr/qr_screen.dart';
 import 'package:shit_grabber/screens/settings/settings_screen.dart';
-import 'package:shit_grabber/themes/app_colors.dart';
-import 'package:shit_grabber/themes/app_text_theme.dart';
-import 'package:shit_grabber/widgets/gradient_widget.dart';
+import 'package:shit_grabber/widgets/custom_app_bar.dart';
 
 import 'app_bottom_nav_widget.dart';
 
@@ -19,7 +17,9 @@ class HomeScreen extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
       builder: (controller) => Scaffold(
-        appBar: _buildAppBar,
+        appBar: CustomAppBar(
+          title: controller.screenTitle,
+        ),
         body: Container(
           child: _bodyByIndex,
         ),
@@ -47,16 +47,4 @@ class HomeScreen extends GetView<HomeController> {
         return DashboardScreen();
     }
   }
-
-  AppBar get _buildAppBar => AppBar(
-        title: GradientMask(
-            child: Text(
-          controller.screenTitle,
-          style: AppTextTheme.darkTextTheme.headline2
-              ?.copyWith(letterSpacing: 2.5),
-        )),
-        elevation: 0.0,
-        backgroundColor: AppColors.appBlack,
-        centerTitle: true,
-      );
 }
