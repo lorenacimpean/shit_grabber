@@ -26,37 +26,60 @@ class SignUpScreen extends GetView<SignUpController> {
         padding: EdgeInsets.all(AppDimensions.defaultPadding),
         child: Form(
           child: controller.obx(
-              (state) => ListView(
-                    children: [
-                      Container(height: 200),
-                      ListView.builder(
-                        physics: BouncingScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: controller.fields.length,
-                        itemBuilder: (ctx, i) => AppTextInput(
-                            formField: controller.fields[i],
-                            onTextObscureToggle: () => controller
-                                .toggleObscureText(controller.fields[i])),
-                      ),
-                      controller.isPasswordError.value
-                          ? ConfirmPasswordErrorWidget()
-                          : Container(),
-                      _buildSubmitButton(),
-                    ],
-                  ),
-              onLoading: LoadingWidget(),
-              onError: (e) => AppErrorWidget(
-                    errorMessage: e,
-                    onRetry: controller.onInit,
-                  )),
+            (state) => ListView(children: [
+              _buildInfo(),
+              _buildFields(),
+              controller.isPasswordError.value
+                  ? ConfirmPasswordErrorWidget()
+                  : Container(),
+              _buildSubmitButton(),
+            ]),
+            onLoading: LoadingWidget(),
+            onError: (e) => AppErrorWidget(
+              errorMessage: e,
+              onRetry: controller.onInit,
+            ),
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildSubmitButton() => TextButton(
-        onPressed: controller.validateConfirmPassword,
-        child: Text(AppStrings.submit),
+  Widget _buildInfo() => Padding(
+        padding: EdgeInsets.only(bottom: AppDimensions.defaultPadding),
+        child: Text(
+          AppStrings.signUpInfo,
+          style: AppTextTheme.darkTextTheme.headline2
+              ?.copyWith(color: AppColors.appBlack),
+          textAlign: TextAlign.justify,
+        ),
+      );
+
+  Widget _buildFields() => ListView.builder(
+        physics: BouncingScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: controller.fields.length,
+        itemBuilder: (ctx, i) => AppTextInput(
+            formField: controller.fields[i],
+            onTextObscureToggle: () =>
+                controller.toggleObscureText(controller.fields[i])),
+      );
+
+  Widget _buildSubmitButton() => Padding(
+        padding: EdgeInsets.only(top: AppDimensions.smallPadding),
+        child: Center(
+          child: ElevatedButton(
+            onPressed: controller.validateConfirmPassword,
+            child: Padding(
+              padding: const EdgeInsets.all(AppDimensions.smallPadding),
+              child: Text(
+                AppStrings.submit,
+                style: AppTextTheme.darkTextTheme.headline2
+                    ?.copyWith(color: AppColors.appBlack),
+              ),
+            ),
+          ),
+        ),
       );
 }
 
