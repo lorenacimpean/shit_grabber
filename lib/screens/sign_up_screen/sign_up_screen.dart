@@ -65,9 +65,21 @@ class SignUpScreen extends GetView<SignUpController> {
                 controller.toggleObscureText(controller.fields[i])),
       );
 
-  Widget _buildSubmitButton() => TextButton(
-        onPressed: controller.validateConfirmPassword,
-        child: Text(AppStrings.submit),
+  Widget _buildSubmitButton() => Padding(
+        padding: EdgeInsets.only(top: AppDimensions.smallPadding),
+        child: Center(
+          child: ElevatedButton(
+            onPressed: controller.validateConfirmPassword,
+            child: Padding(
+              padding: const EdgeInsets.all(AppDimensions.smallPadding),
+              child: Text(
+                AppStrings.submit,
+                style: AppTextTheme.darkTextTheme.headline2
+                    ?.copyWith(color: AppColors.appBlack),
+              ),
+            ),
+          ),
+        ),
       );
 }
 
