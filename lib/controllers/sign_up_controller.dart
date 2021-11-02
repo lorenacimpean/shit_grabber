@@ -35,12 +35,12 @@ class SignUpController extends SubscriptionState<SignUpController> {
     if (passwordText.isEmpty ||
         confirmPassWordText.isEmpty ||
         confirmPassWordText != passwordText) {
-      isPasswordIdentical.value = false;
+      isPasswordIdentical = false.obs;
       change(isPasswordIdentical.value, status: RxStatus.success());
       passwordField.textEditingController.clear();
       confirmPasswordField.textEditingController.clear();
     } else {
-      isPasswordIdentical.value = true;
+      isPasswordIdentical = true.obs;
       change(isPasswordIdentical.value, status: RxStatus.success());
     }
   }
@@ -55,4 +55,6 @@ class SignUpController extends SubscriptionState<SignUpController> {
       }).toList();
     change(fields.value, status: RxStatus.success());
   }
+
+  // fdsfs
 }

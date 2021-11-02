@@ -33,12 +33,10 @@ class SignUpScreen extends GetView<SignUpController> {
                         physics: BouncingScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: controller.fields.length,
-                        itemBuilder: (ctx, i) =>
-                            //TODO: implement obscure text
-                            AppTextInput(
-                                formField: controller.fields[i],
-                                onTextObscureToggle: () => controller
-                                    .toggleObscureText(controller.fields[i])),
+                        itemBuilder: (ctx, i) => AppTextInput(
+                            formField: controller.fields[i],
+                            onTextObscureToggle: () => controller
+                                .toggleObscureText(controller.fields[i])),
                       ),
                       controller.isPasswordIdentical.value
                           ? Container()
