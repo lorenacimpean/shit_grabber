@@ -29,4 +29,9 @@ class AppStrings {
       'Passwords did not match. Please fill them out again';
   static const String submit = 'Submit';
   static const String retry = 'Retry';
+
+  // Sign up
+  static const String signUpInfo =
+      ' In order for the app to sync your files with the server you have to create an account.'
+      '\n Please fill in the fields below with the required info.';
 }
