@@ -1,16 +1,17 @@
 import 'package:get/get.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:shit_grabber/models/form_field.dart';
 import 'package:shit_grabber/utils/subscription_state.dart';
 
 class SignUpController extends SubscriptionState<SignUpController> {
   late RxList<FormFieldModel> fields;
-  late RxBool isPasswordIdentical;
+  late RxBool isPasswordError;
 
   @override
   void onInit() {
     super.onInit();
     change(null, status: RxStatus.loading());
-    isPasswordIdentical = RxBool(true);
+    isPasswordError = false.obs;
     _initFields();
   }
 
@@ -18,7 +19,6 @@ class SignUpController extends SubscriptionState<SignUpController> {
     List<FormFieldModel> list =
         FieldType.values.map((t) => FormFieldModel.fromType(t)).toList();
     fields = list.obs;
-
     change(fields, status: RxStatus.success());
   }
 
@@ -32,16 +32,11 @@ class SignUpController extends SubscriptionState<SignUpController> {
     String confirmPassWordText =
         confirmPasswordField.textEditingController.value.text;
 
-    if (passwordText.isEmpty ||
-        confirmPassWordText.isEmpty ||
+    if ((passwordText.isNotEmpty && confirmPassWordText.isNotEmpty) &&
         confirmPassWordText != passwordText) {
-      isPasswordIdentical.value = false;
-      change(isPasswordIdentical.value, status: RxStatus.success());
+      showConfirmPasswordErrorMessage();
       passwordField.textEditingController.clear();
       confirmPasswordField.textEditingController.clear();
-    } else {
-      isPasswordIdentical.value = true;
-      change(isPasswordIdentical.value, status: RxStatus.success());
     }
   }
 
@@ -54,5 +49,15 @@ class SignUpController extends SubscriptionState<SignUpController> {
         }
       }).toList();
     change(fields.value, status: RxStatus.success());
+  }
+
+  void showConfirmPasswordErrorMessage() {
+    Stream<bool> delayStream = Stream.value(false).delay(Duration(seconds: 3));
+    isPasswordError = true.obs;
+    change(isPasswordError.value, status: RxStatus.success());
+    disposeLater(delayStream.listen((showError) {
+      isPasswordError = showError.obs;
+      change(isPasswordError.value, status: RxStatus.success());
+    }));
   }
 }
