@@ -44,4 +44,15 @@ class SignUpController extends SubscriptionState<SignUpController> {
       change(isPasswordIdentical.value, status: RxStatus.success());
     }
   }
+
+  void toggleObscureText(FormFieldModel currentField) {
+    fields.value
+      ..map((field) {
+        if (field == currentField) {
+          bool isObscured = field.isTextObscured ?? true;
+          field.isTextObscured = !isObscured;
+        }
+      }).toList();
+    change(fields.value, status: RxStatus.success());
+  }
 }

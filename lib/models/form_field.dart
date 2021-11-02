@@ -70,4 +70,21 @@ class FormFieldModel {
         return AppStrings.confirmPassword;
     }
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is FormFieldModel &&
+          runtimeType == other.runtimeType &&
+          fieldType == other.fieldType &&
+          label == other.label &&
+          textEditingController == other.textEditingController &&
+          isTextObscured == other.isTextObscured;
+
+  @override
+  int get hashCode =>
+      fieldType.hashCode ^
+      label.hashCode ^
+      textEditingController.hashCode ^
+      isTextObscured.hashCode;
 }

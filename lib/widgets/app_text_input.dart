@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:shit_grabber/models/form_field.dart';
 import 'package:shit_grabber/themes/app_colors.dart';
 import 'package:shit_grabber/themes/app_dimensions.dart';
+import 'package:shit_grabber/widgets/gradient_widget.dart';
 
 class AppTextInput extends StatelessWidget {
   final FormFieldModel formField;
-  final ValueChanged<bool>? onTextObscureToggle;
+  final VoidCallback? onTextObscureToggle;
 
   AppTextInput({
     Key? key,
@@ -37,12 +38,15 @@ class AppTextInput extends StatelessWidget {
               validator: formField.validatorByType,
               autovalidateMode: AutovalidateMode.onUserInteraction,
             ),
-            if (formField.isTextObscured ?? false)
+            if (formField.fieldType == FieldType.password ||
+                formField.fieldType == FieldType.confirmPassword)
               Positioned(
                 right: 0,
-                child: IconButton(
-                  icon: Icon(CupertinoIcons.ant_circle_fill),
-                  onPressed: () => onTextObscureToggle,
+                child: GradientMask(
+                  child: IconButton(
+                    icon: Icon(CupertinoIcons.ant_circle_fill),
+                    onPressed: onTextObscureToggle,
+                  ),
                 ),
               ),
           ],

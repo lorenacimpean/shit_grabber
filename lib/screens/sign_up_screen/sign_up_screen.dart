@@ -35,7 +35,10 @@ class SignUpScreen extends GetView<SignUpController> {
                         itemCount: controller.fields.length,
                         itemBuilder: (ctx, i) =>
                             //TODO: implement obscure text
-                            AppTextInput(formField: controller.fields[i]),
+                            AppTextInput(
+                                formField: controller.fields[i],
+                                onTextObscureToggle: () => controller
+                                    .toggleObscureText(controller.fields[i])),
                       ),
                       controller.isPasswordIdentical.value
                           ? Container()
