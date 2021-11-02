@@ -2,7 +2,6 @@ import 'package:camera/camera.dart';
 import 'package:shit_grabber/models/document_model.dart';
 
 class CameraRepo {
-  static final Duration _tapDelay = Duration(milliseconds: 200);
 
   Stream<List<CameraDescription>> get cameras => availableCameras().asStream();
 

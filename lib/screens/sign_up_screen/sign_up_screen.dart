@@ -38,9 +38,9 @@ class SignUpScreen extends GetView<SignUpController> {
                             onTextObscureToggle: () => controller
                                 .toggleObscureText(controller.fields[i])),
                       ),
-                      controller.isPasswordIdentical.value
-                          ? Container()
-                          : ConfirmPasswordErrorWidget(),
+                      controller.isPasswordError.value
+                          ? ConfirmPasswordErrorWidget()
+                          : Container(),
                       _buildSubmitButton(),
                     ],
                   ),
