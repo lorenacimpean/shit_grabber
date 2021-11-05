@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:rxdart/rxdart.dart';
 
 class AuthRepo {
+  //TODO: implement login sessions
   final Future<FirebaseApp> firebaseInitialization = Firebase.initializeApp();
   final FirebaseAuth auth = FirebaseAuth.instance;
   final GoogleSignIn googleSign = GoogleSignIn();
@@ -38,4 +39,21 @@ class AuthRepo {
       return false;
     });
   }
+
+  Stream<bool> signOut() {
+    return auth
+        .signOut()
+        .asStream()
+        .map((event) => true)
+        .onErrorReturnWith((error, stackTrace) {
+      Get.snackbar(
+        "Error",
+        error.toString(),
+        snackPosition: SnackPosition.TOP,
+      );
+      return false;
+    });
+  }
+
+  Stream<User?> get currentUser => auth.userChanges();
 }

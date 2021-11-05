@@ -69,7 +69,9 @@ class SignUpScreen extends GetView<SignUpController> {
         padding: EdgeInsets.only(top: AppDimensions.smallPadding),
         child: Center(
           child: ElevatedButton(
-            onPressed: controller.validateConfirmPassword,
+            onPressed: () {
+              controller.goToNext();
+            },
             child: Padding(
               padding: const EdgeInsets.all(AppDimensions.smallPadding),
               child: Text(

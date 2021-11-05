@@ -1,9 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:rxdart/src/transformers/delay.dart';
 import 'package:shit_grabber/models/form_field.dart';
+import 'package:shit_grabber/repo/firebase_repo.dart';
+import 'package:shit_grabber/themes/app_strings.dart';
 import 'package:shit_grabber/utils/subscription_state.dart';
 
 class SignUpController extends SubscriptionState<SignUpController> {
+  AuthRepo authRepo = AuthRepo();
+  late RxString title;
+  late Rx<User?> firebaseUser;
   late RxList<FormFieldModel> fields;
   late RxBool isPasswordError;
 
@@ -11,8 +17,12 @@ class SignUpController extends SubscriptionState<SignUpController> {
   void onInit() {
     super.onInit();
     change(null, status: RxStatus.loading());
+    firebaseUser = Rx<User?>(null);
+    firebaseUser.bindStream(authRepo.currentUser);
     isPasswordError = false.obs;
     _initFields();
+
+    ever(firebaseUser, _setScreenTitle);
   }
 
   void _initFields() {
@@ -23,20 +33,15 @@ class SignUpController extends SubscriptionState<SignUpController> {
   }
 
   void validateConfirmPassword() {
-    FormFieldModel passwordField =
-        fields.value.firstWhere((f) => f.fieldType == FieldType.password);
-    FormFieldModel confirmPasswordField = fields.value
-        .firstWhere((f) => f.fieldType == FieldType.confirmPassword);
+    String passwordText = _passwordField.textEditingController.value.text;
+    String confirmPasswordText =
+        _confirmPasswordField.textEditingController.value.text;
 
-    String passwordText = passwordField.textEditingController.value.text;
-    String confirmPassWordText =
-        confirmPasswordField.textEditingController.value.text;
-
-    if ((passwordText.isNotEmpty && confirmPassWordText.isNotEmpty) &&
-        confirmPassWordText != passwordText) {
+    if ((passwordText.isNotEmpty && confirmPasswordText.isNotEmpty) &&
+        passwordText != confirmPasswordText) {
       showConfirmPasswordErrorMessage();
-      passwordField.textEditingController.clear();
-      confirmPasswordField.textEditingController.clear();
+      _passwordField.textEditingController.clear();
+      _confirmPasswordField.textEditingController.clear();
     }
   }
 
@@ -60,4 +65,45 @@ class SignUpController extends SubscriptionState<SignUpController> {
       change(isPasswordError.value, status: RxStatus.success());
     }));
   }
+
+  void _setScreenTitle(User? user) {
+    title = user != null ? AppStrings.login.obs : AppStrings.signUp.obs;
+    change(title, status: RxStatus.success());
+  }
+
+  void login(String email, String password) {
+    disposeLater(authRepo.login(email, password).listen((isSuccess) {
+      if (isSuccess) {
+        //TODO: add navigation to sync options
+        // Get.offAll(page);
+      }
+    }));
+  }
+
+  void signUp(String email, String password) {
+    disposeLater(authRepo.signup(email, password).listen((isSuccess) {
+      //TODO: add navigation to sync options
+      // Get.offAll(page);
+    }));
+  }
+
+  void goToNext() {
+    validateConfirmPassword();
+    if (!isPasswordError.value) {
+      firebaseUser.value != null
+          ? login(_emailField.textEditingController.text,
+              _passwordField.textEditingController.text)
+          : signUp(_emailField.textEditingController.text,
+              _passwordField.textEditingController.text);
+    }
+  }
+
+  FormFieldModel get _emailField =>
+      fields.value.firstWhere((f) => f.fieldType == FieldType.email);
+
+  FormFieldModel get _passwordField =>
+      fields.value.firstWhere((f) => f.fieldType == FieldType.password);
+
+  FormFieldModel get _confirmPasswordField =>
+      fields.value.firstWhere((f) => f.fieldType == FieldType.confirmPassword);
 }
