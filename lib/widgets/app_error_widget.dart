@@ -60,6 +60,8 @@ class AppErrorWidget extends StatelessWidget {
   String? get _errorString {
     if (error is Error) {
       return (error as Error).stackTrace.toString();
+    } else if (error is String) {
+      return error as String;
     } else {
       return null;
     }

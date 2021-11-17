@@ -103,7 +103,8 @@ class SignUpController extends SubscriptionState<SignUpController> {
           change(null, status: RxStatus.loading());
           break;
         case ResponseState.error:
-          change(response.error, status: RxStatus.error());
+          change(response.error.toString(),
+              status: RxStatus.error(response.error.toString()));
           break;
       }
     }));
