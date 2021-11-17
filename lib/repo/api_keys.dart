@@ -3,4 +3,5 @@ class ApiKeys {
   static const String name = 'name';
   static const String path = 'path';
   static const String lastModified = 'lastModified';
+  static const String isLoggedIn = 'isLoggedIn';
 }

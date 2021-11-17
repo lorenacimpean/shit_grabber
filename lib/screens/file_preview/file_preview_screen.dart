@@ -28,7 +28,7 @@ class FilePreviewScreen extends GetView<FilePreviewController> {
             (state) => _buildBodyByFileType(),
             onLoading: LoadingWidget(),
             onError: (error) => AppErrorWidget(
-              errorMessage: error,
+              error: error,
             ),
           ),
         ),

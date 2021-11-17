@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:rxdart/src/transformers/delay.dart';
 import 'package:shit_grabber/models/form_field.dart';
+import 'package:shit_grabber/models/response_model.dart';
 import 'package:shit_grabber/repo/firebase_repo.dart';
 import 'package:shit_grabber/themes/app_strings.dart';
 import 'package:shit_grabber/utils/subscription_state.dart';
@@ -26,8 +27,13 @@ class SignUpController extends SubscriptionState<SignUpController> {
   }
 
   void _initFields() {
-    List<FormFieldModel> list =
-        FieldType.values.map((t) => FormFieldModel.fromType(t)).toList();
+    List<FormFieldModel> list = FieldType.values.map((t) {
+      return FormFieldModel.fromType(t);
+    }).toList();
+    list.removeWhere((element) {
+      return firebaseUser.value != null &&
+          element.fieldType == FieldType.confirmPassword;
+    });
     fields = list.obs;
     change(fields, status: RxStatus.success());
   }
@@ -72,18 +78,34 @@ class SignUpController extends SubscriptionState<SignUpController> {
   }
 
   void login(String email, String password) {
-    disposeLater(authRepo.login(email, password).listen((isSuccess) {
-      if (isSuccess) {
-        //TODO: add navigation to sync options
-        // Get.offAll(page);
+    disposeLater(authRepo.login(email, password).listen((response) {
+      switch (response.state) {
+        case ResponseState.success:
+          // TODO: Handle this case.
+          break;
+        case ResponseState.loading:
+          // TODO: Handle this case.
+          break;
+        case ResponseState.error:
+          // TODO: Handle this case.
+          break;
       }
     }));
   }
 
   void signUp(String email, String password) {
-    disposeLater(authRepo.signup(email, password).listen((isSuccess) {
-      //TODO: add navigation to sync options
-      // Get.offAll(page);
+    disposeLater(authRepo.signup(email, password).listen((response) {
+      switch (response.state) {
+        case ResponseState.success:
+          // TODO: Handle this case.
+          break;
+        case ResponseState.loading:
+          change(null, status: RxStatus.loading());
+          break;
+        case ResponseState.error:
+          change(response.error, status: RxStatus.error());
+          break;
+      }
     }));
   }
 

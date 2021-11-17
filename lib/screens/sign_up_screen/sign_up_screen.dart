@@ -36,7 +36,7 @@ class SignUpScreen extends GetView<SignUpController> {
             ]),
             onLoading: LoadingWidget(),
             onError: (e) => AppErrorWidget(
-              errorMessage: e,
+              error: e,
               onRetry: controller.onInit,
             ),
           ),

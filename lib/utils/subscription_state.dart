@@ -6,6 +6,11 @@ abstract class SubscriptionState<T extends GetxController>
     extends GetxController with StateMixin {
   final List<StreamSubscription> _subscriptions = [];
 
+  @override
+  void onInit(){
+    super.onInit();
+  }
+
   void disposeLater(StreamSubscription subscription) {
     _subscriptions.add(subscription);
   }
