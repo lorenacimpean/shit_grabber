@@ -46,9 +46,8 @@ class AuthWidget extends StatelessWidget {
         padding: EdgeInsets.only(bottom: AppDimensions.defaultPadding),
         child: Text(
           AppStrings.signUpInfo,
-          style: AppTextTheme.darkTextTheme.headline2?.copyWith(
-            color: AppColors.appBlack,
-          ),
+          style: AppTextTheme.darkTextTheme.headline2
+              ?.copyWith(color: AppColors.appWhite),
           textAlign: TextAlign.justify,
         ),
       );

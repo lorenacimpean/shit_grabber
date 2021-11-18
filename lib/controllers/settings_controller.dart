@@ -111,13 +111,14 @@ class SettingsController extends SubscriptionState<SettingsController> {
   void goToNext() {
     if (_emailField.textEditingController.text.isNotEmpty) {
       isEmailError = false.obs;
+      change(isEmailError.value, status: RxStatus.success());
       disposeLater(authRepo
           .checkAccountExists(_emailField.textEditingController.text)
           .listen((exists) {
         accountExists = exists.obs;
         fields.value.addIf(
             !_hasPasswordField, FormFieldModel.fromType(FieldType.password));
-        change(fields, status: RxStatus.success());
+        change(fields.value, status: RxStatus.success());
 
         if (exists &&
             !isPasswordError.value &&
@@ -136,12 +137,16 @@ class SettingsController extends SubscriptionState<SettingsController> {
       _checkUser();
     } else {
       isEmailError = true.obs;
+      change(isEmailError.value, status: RxStatus.success());
     }
   }
 
   void logout() {
-    disposeLater(authRepo.signOut().listen((event) {}));
-    onInit();
+    disposeLater(
+      authRepo.signOut().listen((_) {
+        onInit();
+      }),
+    );
   }
 
   FormFieldModel get _emailField =>

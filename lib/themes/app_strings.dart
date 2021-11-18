@@ -37,9 +37,9 @@ class AppStrings {
   static const login = 'Login';
   static const logout = 'Logout';
   static const String signUpInfo =
-      ' In order for the app to sync your files with the server you have to create an account.'
-      '\n Please fill in the fields below with the required info.';
+      'In order for the app to sync your files with the cloud database you have to create an account.'
+      '\nPlease fill in the fields below with the required info.';
   static const syncOptions =
-      "You are currently signed in, and your documents are being synced with the cloud database. "
-      "\nIf you would like to stop syncing your documents, you can logout by tapping on the button below.";
+      'You are currently signed in, and your documents are being synced with the cloud database. '
+      '\nIf you would like to stop syncing your documents, you can logout by tapping on the button below.';
 }
