@@ -2,13 +2,11 @@ import 'package:get/get.dart';
 import 'package:shit_grabber/bindings/dashboard_binding.dart';
 import 'package:shit_grabber/bindings/file_preview_binding.dart';
 import 'package:shit_grabber/bindings/home_binding.dart';
-import 'package:shit_grabber/bindings/sign_up_binding.dart';
 import 'package:shit_grabber/bindings/take_picture_binding.dart';
 import 'package:shit_grabber/screens/camera/take_picture_screen.dart';
 import 'package:shit_grabber/screens/dashboard/dashboard_screen.dart';
 import 'package:shit_grabber/screens/file_preview/file_preview_screen.dart';
 import 'package:shit_grabber/screens/home/home_screen.dart';
-import 'package:shit_grabber/screens/settings/settings_screen.dart';
 
 class Routes {
   static const String homeRoute = '/home';
@@ -37,11 +35,6 @@ class Routes {
       name: '$filePreviewRoute/:documentModel',
       page: () => FilePreviewScreen(),
       binding: FilePreviewBinding(),
-    ),
-    GetPage(
-      name: settings,
-      page: () => SettingsScreen(),
-      binding: SettingsBinding(),
     ),
   ];
 }
