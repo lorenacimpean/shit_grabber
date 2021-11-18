@@ -27,6 +27,7 @@ class SettingsScreen extends GetView<SettingsController> {
                 onTextObscureToggle: controller.toggleObscureText,
                 onSubmit: controller.goToNext,
                 isConfirmPasswordValid: !controller.isPasswordError.value,
+                isEmailValid: !controller.isEmailError.value,
               )
             : _buildSyncInfo(),
         onLoading: LoadingWidget(),

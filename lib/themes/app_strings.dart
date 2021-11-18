@@ -25,6 +25,7 @@ class AppStrings {
   static const String emailFormatError = 'Invalid email';
   static const String passwordError =
       'Password must contain at least 8 characters, a number and a capital letter';
+  static const String emailError = 'Please use a valid email address';
   static const String confirmPasswordError =
       'Passwords did not match. Please fill them out again';
   static const String submit = 'Submit';

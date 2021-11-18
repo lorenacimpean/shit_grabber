@@ -11,13 +11,15 @@ class AuthWidget extends StatelessWidget {
   final Function(FormFieldModel model) onTextObscureToggle;
   final VoidCallback onSubmit;
   final bool isConfirmPasswordValid;
+  final bool isEmailValid;
 
   const AuthWidget(
       {Key? key,
       required this.fields,
       required this.onTextObscureToggle,
       required this.onSubmit,
-      required this.isConfirmPasswordValid})
+      required this.isConfirmPasswordValid,
+      required this.isEmailValid})
       : super(key: key);
 
   @override
@@ -26,7 +28,15 @@ class AuthWidget extends StatelessWidget {
       child: ListView(children: [
         _buildInfo(),
         _buildFields(),
-        isConfirmPasswordValid ? Container() : ConfirmPasswordErrorWidget(),
+        if (!isEmailValid)
+          FormErrorWidget(
+            errorMessage: AppStrings.emailError,
+          ),
+        isConfirmPasswordValid
+            ? Container()
+            : FormErrorWidget(
+                errorMessage: AppStrings.confirmPasswordError,
+              ),
         _buildSubmitButton(),
       ]),
     );
@@ -36,8 +46,9 @@ class AuthWidget extends StatelessWidget {
         padding: EdgeInsets.only(bottom: AppDimensions.defaultPadding),
         child: Text(
           AppStrings.signUpInfo,
-          style: AppTextTheme.darkTextTheme.headline2
-              ?.copyWith(color: AppColors.appBlack),
+          style: AppTextTheme.darkTextTheme.headline2?.copyWith(
+            color: AppColors.appBlack,
+          ),
           textAlign: TextAlign.justify,
         ),
       );
@@ -49,8 +60,9 @@ class AuthWidget extends StatelessWidget {
         itemBuilder: (ctx, i) => AnimatedContainer(
           duration: Duration(milliseconds: 300),
           child: AppTextInput(
-              formField: fields[i],
-              onTextObscureToggle: () => onTextObscureToggle(fields[i])),
+            formField: fields[i],
+            onTextObscureToggle: () => onTextObscureToggle(fields[i]),
+          ),
         ),
       );
 
@@ -63,8 +75,9 @@ class AuthWidget extends StatelessWidget {
               padding: const EdgeInsets.all(AppDimensions.smallPadding),
               child: Text(
                 AppStrings.submit,
-                style: AppTextTheme.darkTextTheme.headline2
-                    ?.copyWith(color: AppColors.appBlack),
+                style: AppTextTheme.darkTextTheme.headline2?.copyWith(
+                  color: AppColors.appBlack,
+                ),
               ),
             ),
           ),
@@ -72,17 +85,23 @@ class AuthWidget extends StatelessWidget {
       );
 }
 
-class ConfirmPasswordErrorWidget extends StatelessWidget {
+class FormErrorWidget extends StatelessWidget {
+  final String errorMessage;
+
+  const FormErrorWidget({Key? key, required this.errorMessage})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Card(
       color: AppColors.opaqueBlack,
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppDimensions.defaultRadius)),
+        borderRadius: BorderRadius.circular(AppDimensions.defaultRadius),
+      ),
       child: Padding(
         padding: EdgeInsets.all(AppDimensions.smallPadding),
         child: Text(
-          AppStrings.confirmPasswordError,
+          errorMessage,
           style: AppTextTheme.darkTextTheme.headline3
               ?.copyWith(color: AppColors.error),
         ),

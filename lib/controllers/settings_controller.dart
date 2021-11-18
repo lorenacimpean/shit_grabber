@@ -4,15 +4,15 @@ import 'package:rxdart/src/transformers/delay.dart';
 import 'package:shit_grabber/models/form_field.dart';
 import 'package:shit_grabber/models/response_model.dart';
 import 'package:shit_grabber/repo/firebase_repo.dart';
-import 'package:shit_grabber/themes/app_strings.dart';
 import 'package:shit_grabber/utils/subscription_state.dart';
 
 class SettingsController extends SubscriptionState<SettingsController> {
   AuthRepo authRepo = AuthRepo();
-  late RxString title;
+
   late Rx<User?> firebaseUser;
   late RxList<FormFieldModel> fields;
   late RxBool isPasswordError;
+  late RxBool isEmailError;
   RxBool? accountExists;
 
   @override
@@ -20,8 +20,8 @@ class SettingsController extends SubscriptionState<SettingsController> {
     super.onInit();
     change(null, status: RxStatus.loading());
     firebaseUser = Rx<User?>(null);
-    title = RxString('');
     isPasswordError = false.obs;
+    isEmailError = false.obs;
     _checkUser();
     _initFields();
   }
@@ -71,8 +71,6 @@ class SettingsController extends SubscriptionState<SettingsController> {
     disposeLater(authRepo.currentUser.listen((user) {
       firebaseUser.value = user;
       change(firebaseUser.value, status: RxStatus.success());
-      title = user == null ? AppStrings.login.obs : AppStrings.syncOptions.obs;
-      change(title.value, status: RxStatus.success());
     }));
   }
 
@@ -112,6 +110,7 @@ class SettingsController extends SubscriptionState<SettingsController> {
 
   void goToNext() {
     if (_emailField.textEditingController.text.isNotEmpty) {
+      isEmailError = false.obs;
       disposeLater(authRepo
           .checkAccountExists(_emailField.textEditingController.text)
           .listen((exists) {
@@ -135,12 +134,14 @@ class SettingsController extends SubscriptionState<SettingsController> {
         }
       }));
       _checkUser();
+    } else {
+      isEmailError = true.obs;
     }
   }
 
   void logout() {
     disposeLater(authRepo.signOut().listen((event) {}));
-    ;
+    onInit();
   }
 
   FormFieldModel get _emailField =>
