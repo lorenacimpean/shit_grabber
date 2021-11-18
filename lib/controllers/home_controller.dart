@@ -39,7 +39,6 @@ class HomeController extends SubscriptionState<HomeController> {
     List<String> titles = [
       AppStrings.dashboard,
       AppStrings.takePhoto,
-      AppStrings.shareApp,
       AppStrings.settings,
     ];
     return titles[selectedIndex];
