@@ -1,14 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:rxdart/src/transformers/delay.dart';
 import 'package:shit_grabber/models/form_field.dart';
 import 'package:shit_grabber/models/response_model.dart';
 import 'package:shit_grabber/repo/firebase_repo.dart';
+import 'package:shit_grabber/repo/firestore_repo.dart';
 import 'package:shit_grabber/utils/subscription_state.dart';
 
 class SettingsController extends SubscriptionState<SettingsController> {
   AuthRepo authRepo = AuthRepo();
-
+  FireStoreRepo _fireStoreRepo = FireStoreRepo();
   late Rx<User?> firebaseUser;
   late RxList<FormFieldModel> fields;
   late RxBool isPasswordError;
@@ -68,9 +70,11 @@ class SettingsController extends SubscriptionState<SettingsController> {
   }
 
   void _checkUser() {
+    change(null, status: RxStatus.loading());
     disposeLater(authRepo.currentUser.listen((user) {
       firebaseUser.value = user;
       change(firebaseUser.value, status: RxStatus.success());
+      uploadAllToCloud();
     }));
   }
 
@@ -89,6 +93,7 @@ class SettingsController extends SubscriptionState<SettingsController> {
           break;
       }
     }));
+    _checkUser();
   }
 
   void signUp(String email, String password) {
@@ -106,6 +111,7 @@ class SettingsController extends SubscriptionState<SettingsController> {
           break;
       }
     }));
+    _checkUser();
   }
 
   void goToNext() {
@@ -133,8 +139,8 @@ class SettingsController extends SubscriptionState<SettingsController> {
           signUp(_emailField.textEditingController.text,
               _passwordField.textEditingController.text);
         }
+        _checkUser();
       }));
-      _checkUser();
     } else {
       isEmailError = true.obs;
       change(isEmailError.value, status: RxStatus.success());
@@ -147,6 +153,16 @@ class SettingsController extends SubscriptionState<SettingsController> {
         onInit();
       }),
     );
+  }
+
+  void uploadAllToCloud() {
+    if (firebaseUser.value != null) {
+      disposeLater(_fireStoreRepo
+          .saveAllToFirestore(firebaseUser.value!.email!)
+          .listen((_) {
+        debugPrint('SettingsController: Saved all to Firestore...');
+      }));
+    }
   }
 
   FormFieldModel get _emailField =>

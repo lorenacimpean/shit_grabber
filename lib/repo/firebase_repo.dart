@@ -6,7 +6,6 @@ import 'package:rxdart/rxdart.dart';
 import 'package:shit_grabber/models/response_model.dart';
 
 class AuthRepo {
-  //TODO: implement login sessions
   final Future<FirebaseApp> firebaseInitialization = Firebase.initializeApp();
   final FirebaseAuth auth = FirebaseAuth.instance;
   final GoogleSignIn googleSign = GoogleSignIn();
