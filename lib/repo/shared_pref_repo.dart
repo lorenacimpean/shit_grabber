@@ -30,7 +30,7 @@ class SharedPrefRepo {
   //TODO : add sorting by latest
   Stream<bool> addStringsToList(String key, List<String> newValues) =>
       getStringList(key).flatMap((list) {
-        list.addAllUniqueElements(newValues);
+        list.addAllUnique(newValues);
         return setStringList(key, list).map((result) => result);
       });
 

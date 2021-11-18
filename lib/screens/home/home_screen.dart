@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:shit_grabber/controllers/home_controller.dart';
 import 'package:shit_grabber/screens/camera/take_picture_screen.dart';
 import 'package:shit_grabber/screens/dashboard/dashboard_screen.dart';
-import 'package:shit_grabber/screens/settings/settings_screen.dart';
 import 'package:shit_grabber/widgets/custom_app_bar.dart';
 
 import 'app_bottom_nav_widget.dart';
@@ -38,8 +37,6 @@ class HomeScreen extends GetView<HomeController> {
         return DashboardScreen();
       case 1:
         return TakePictureScreen();
-      case 2:
-        return SettingsScreen();
       default:
         return DashboardScreen();
     }

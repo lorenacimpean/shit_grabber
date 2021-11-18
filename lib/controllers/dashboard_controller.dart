@@ -1,25 +1,17 @@
 import 'dart:convert';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:shit_grabber/models/document_model.dart';
 import 'package:shit_grabber/repo/api_keys.dart';
 import 'package:shit_grabber/repo/file_picker_repo.dart';
-import 'package:shit_grabber/repo/firebase_repo.dart';
-import 'package:shit_grabber/repo/firestore_repo.dart';
 import 'package:shit_grabber/repo/shared_pref_repo.dart';
 import 'package:shit_grabber/utils/list_extensions.dart';
-import 'package:shit_grabber/utils/permission_handler.dart';
 import 'package:shit_grabber/utils/subscription_state.dart';
 
-class DashboardController extends SubscriptionState<DashboardController>
-    with PermissionHandler {
+class DashboardController extends SubscriptionState<DashboardController> {
   late FilePickerRepo _filePickerRepo;
   late SharedPrefRepo _sharedPrefRepo;
-  late AuthRepo _authRepo;
-  late FireStoreRepo _fireStoreRepo;
   late RxList<DocumentModel> documents;
-  late User? _user;
 
   @override
   void onInit() {
@@ -28,22 +20,7 @@ class DashboardController extends SubscriptionState<DashboardController>
     change(null, status: RxStatus.loading());
     _filePickerRepo = Get.find<FilePickerRepo>();
     _sharedPrefRepo = Get.find<SharedPrefRepo>();
-    _authRepo = Get.find<AuthRepo>();
-    _fireStoreRepo = Get.find<FireStoreRepo>();
-
-    _loadDocuments();
-  }
-
-  void _loadDocuments() {
-    change(null, status: RxStatus.loading());
-    disposeLater(_authRepo.currentUser.listen((user) {
-      _user = user;
-      if (user != null) {
-        _loadDocumentsFromCloud(user.email!);
-      } else {
-        _loadDocumentsFromStorage();
-      }
-    }));
+    _loadDocumentsFromStorage();
   }
 
   void _loadDocumentsFromStorage() {
@@ -54,31 +31,15 @@ class DashboardController extends SubscriptionState<DashboardController>
       List<DocumentModel> fileList = stringList.map((fileString) {
         return DocumentModel.fromJson(jsonDecode(fileString));
       }).toList();
-      documents.value = fileList;
+      documents = fileList.obs;
       change(fileList, status: RxStatus.success());
-    }));
-  }
-
-  void _loadDocumentsFromCloud(String email) {
-    change(null, status: RxStatus.loading());
-    disposeLater(
-        _fireStoreRepo.getAllFromFirestore(email).listen((documentList) {
-      documents.value = documentList;
-      change(documentList, status: RxStatus.success());
     }));
   }
 
   void addDocuments() {
     disposeLater(
-      //TODO: check this, it's annoying
-      handleStoragePermission().listen((isGranted) {
-        if (isGranted) {
-          disposeLater(
-            _filePickerRepo.pickFiles().listen((selectedFiles) {
-              saveDocumentToSharedPref(selectedFiles);
-            }),
-          );
-        }
+      _filePickerRepo.pickFiles().listen((selectedFiles) {
+        saveDocumentToSharedPref(selectedFiles);
       }),
     );
   }
@@ -88,14 +49,9 @@ class DashboardController extends SubscriptionState<DashboardController>
     disposeLater(_sharedPrefRepo
         .addStringsToList(ApiKeys.documentList, getStringList(selectedFiles))
         .listen((event) {
-      List<DocumentModel> newList = documents
-        ..addAllUniqueDocuments(selectedFiles);
-      documents.value = newList;
+      List<DocumentModel> newList = documents..addAllUnique(selectedFiles);
+      documents = newList.obs;
       change(newList, status: RxStatus.success());
-      if (_user != null) {
-        disposeLater(
-            _fireStoreRepo.saveAllToFirestore(_user!.email!).listen((_) {}));
-      }
     }));
   }
 
@@ -106,7 +62,7 @@ class DashboardController extends SubscriptionState<DashboardController>
     disposeLater(_sharedPrefRepo
         .setStringList(ApiKeys.documentList, getStringList(newList))
         .listen((_) {
-      documents.value = newList;
+      documents = newList.obs;
       change(newList, status: RxStatus.success());
     }));
   }

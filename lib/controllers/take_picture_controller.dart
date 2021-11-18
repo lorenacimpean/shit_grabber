@@ -16,9 +16,13 @@ class TakePictureController extends SubscriptionState<TakePictureController> {
   @override
   void onInit() {
     super.onInit();
-    change(null, status: RxStatus.loading());
     _sharedPrefRepo = Get.find<SharedPrefRepo>();
     _cameraRepo = Get.find<CameraRepo>();
+    initCamera();
+  }
+
+  void initCamera() {
+    change(null, status: RxStatus.loading());
     disposeLater(
       _cameraRepo.cameras.listen((list) {
         cameraController = Rx(
@@ -40,8 +44,9 @@ class TakePictureController extends SubscriptionState<TakePictureController> {
     disposeLater(
       _cameraRepo.initCameraController(cameraController.value).listen((_) {
         disposeLater(
-            _cameraRepo.disableFlash(cameraController.value).listen((_) {}));
-        change(cameraController.value, status: RxStatus.success());
+            _cameraRepo.disableFlash(cameraController.value).listen((_) {
+          change(cameraController.value, status: RxStatus.success());
+        }));
       })
         ..onError((error) {
           if (error is CameraException) {
@@ -58,12 +63,12 @@ class TakePictureController extends SubscriptionState<TakePictureController> {
     disposeLater(
       _cameraRepo.takePicture(cameraController.value).listen((documentModel) {
         saveToSharedPref(documentModel);
+        change(cameraController.value, status: RxStatus.success());
       })
         ..onError((error) {
           change(error, status: RxStatus.error(error.toString()));
         }),
     );
-    change(cameraController.value, status: RxStatus.success());
   }
 
   void saveToSharedPref(DocumentModel documentModel) {

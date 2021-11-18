@@ -18,8 +18,6 @@ class CameraRepo {
       (file) => DocumentModel(
         name: file.name,
         path: file.path,
-        lastModified: DateTime.now(),
-        encodedString: DocumentModel.encodeFile(file.path),
       ),
     );
   }
