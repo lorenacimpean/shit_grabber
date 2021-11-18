@@ -6,14 +6,12 @@ import 'package:shit_grabber/themes/app_text_theme.dart';
 
 class DocumentCard extends StatelessWidget {
   final String title;
-  final VoidCallback onEdit;
   final VoidCallback onDelete;
   final VoidCallback onTap;
 
   const DocumentCard({
     Key? key,
     required this.title,
-    required this.onEdit,
     required this.onDelete,
     required this.onTap,
   }) : super(key: key);
@@ -65,16 +63,6 @@ class DocumentCard extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        TextButton(
-                          onPressed: () => onEdit,
-                          child: Text(
-                            'Edit',
-                            style: AppTextTheme.darkTextTheme.bodyText1
-                                ?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.tertiary),
-                          ),
-                        ),
                         TextButton(
                           onPressed: onDelete,
                           child: Text(

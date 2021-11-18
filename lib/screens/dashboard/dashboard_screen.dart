@@ -45,9 +45,8 @@ class DashboardScreen extends GetView<DashboardController> {
           itemCount: controller.documents.length,
           itemBuilder: (context, index) => DocumentCard(
               title: controller.documents[index].name,
-              onDelete: () => _showDialog(controller.documents[index].name),
-              //TODO: check if can edit document name
-              onEdit: () => print('Tapped edit'),
+              onDelete: () => _showDeleteConfirmationDialog(
+                  controller.documents[index].name),
               onTap: () => Get.to(() => FilePreviewScreen(),
                   arguments: controller.documents[index],
                   binding: FilePreviewBinding())),
@@ -58,7 +57,7 @@ class DashboardScreen extends GetView<DashboardController> {
     );
   }
 
-  void _showDialog(String documentName) {
+  void _showDeleteConfirmationDialog(String documentName) {
     AppDialog dialog = AppDialog(
       title: AppStrings.areYouSure,
       contentText: AppStrings.itemDelete,
