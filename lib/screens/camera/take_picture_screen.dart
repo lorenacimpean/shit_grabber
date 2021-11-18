@@ -2,13 +2,9 @@ import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:shit_grabber/controllers/take_picture_controller.dart';
 import 'package:shit_grabber/themes/app_colors.dart';
 import 'package:shit_grabber/themes/app_dimensions.dart';
-import 'package:shit_grabber/themes/app_strings.dart';
-import 'package:shit_grabber/themes/app_text_theme.dart';
-import 'package:shit_grabber/widgets/gradient_widget.dart';
 import 'package:shit_grabber/widgets/loading_widget.dart';
 
 class TakePictureScreen extends GetView<TakePictureController> {
@@ -20,9 +16,6 @@ class TakePictureScreen extends GetView<TakePictureController> {
       body: controller.obx(
         (state) => _buildBody(),
         onLoading: LoadingWidget(),
-        onError: (error) => CameraPermissionError(
-          text: error.toString(),
-        ),
       ),
     );
   }
@@ -55,53 +48,5 @@ class TakePictureScreen extends GetView<TakePictureController> {
         ),
       )
     ]);
-  }
-}
-
-class CameraPermissionError extends StatelessWidget {
-  final String text;
-
-  const CameraPermissionError({Key? key, this.text = AppStrings.genericError})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(AppDimensions.defaultPadding),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsets.all(AppDimensions.smallPadding),
-            child: GradientMask(
-              child: Text(
-                text,
-                style: AppTextTheme.darkTextTheme.headline2,
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(AppDimensions.smallPadding),
-            child: GradientMask(
-              child: Text(
-                AppStrings.goToSettings,
-                style: AppTextTheme.darkTextTheme.headline2,
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(AppDimensions.smallPadding),
-            child: ElevatedButton(
-              child: Text(
-                'Open settings',
-                style: AppTextTheme.darkTextTheme.headline2!
-                    .copyWith(color: AppColors.appBlack),
-              ),
-              onPressed: openAppSettings,
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }

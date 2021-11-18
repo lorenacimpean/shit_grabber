@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:shit_grabber/themes/app_colors.dart';
 import 'package:shit_grabber/themes/app_dimensions.dart';
 import 'package:shit_grabber/themes/app_text_theme.dart';
@@ -29,11 +28,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       // leading: _buildBackButton(),
     );
   }
-
-  Widget _buildBackButton() => GestureDetector(
-        child: GradientMask(child: Icon(CupertinoIcons.back)),
-        onTap: Get.back,
-      );
 
   @override
   Size get preferredSize => Size.fromHeight(AppDimensions.largePadding * 2);
