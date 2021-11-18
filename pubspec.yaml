@@ -23,7 +23,6 @@ dependencies:
       url: https://github.com/camsim99/plugins.git
       path: packages/camera/camera
       ref: issue_89578_dev
-  qr_flutter: ^4.0.0
   permission_handler: ^8.2.5
   firebase_core: ^1.9.0
   firebase_auth: ^3.1.5
