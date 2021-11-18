@@ -10,7 +10,7 @@ import 'package:shit_grabber/screens/dashboard/dashboard_screen.dart';
 import 'package:shit_grabber/screens/file_preview/file_preview_screen.dart';
 import 'package:shit_grabber/screens/home/home_screen.dart';
 import 'package:shit_grabber/screens/qr/qr_screen.dart';
-import 'package:shit_grabber/screens/sign_up_screen/sign_up_screen.dart';
+import 'package:shit_grabber/screens/settings/settings_screen.dart';
 
 class Routes {
   static const String homeRoute = '/home';
@@ -18,7 +18,8 @@ class Routes {
   static const String filePreviewRoute = '/filePreview';
   static const String cameraRoute = '/camera';
   static const String qrCode = '/qrCode';
-  static const String signUp = '/signUp';
+  static const String settings = '/settings';
+
 
   static final routes = [
     GetPage(
@@ -47,9 +48,9 @@ class Routes {
       binding: QrCodeBinding(),
     ),
     GetPage(
-      name: signUp,
-      page: () => SignUpScreen(),
-      binding: SignUpBinding(),
+      name: settings,
+      page: () => SettingsScreen(),
+      binding: SettingsBinding(),
     ),
   ];
 }

@@ -7,33 +7,28 @@ import 'package:shit_grabber/repo/firebase_repo.dart';
 import 'package:shit_grabber/themes/app_strings.dart';
 import 'package:shit_grabber/utils/subscription_state.dart';
 
-class SignUpController extends SubscriptionState<SignUpController> {
+class SettingsController extends SubscriptionState<SettingsController> {
   AuthRepo authRepo = AuthRepo();
   late RxString title;
   late Rx<User?> firebaseUser;
   late RxList<FormFieldModel> fields;
   late RxBool isPasswordError;
+  RxBool? accountExists;
 
   @override
   void onInit() {
     super.onInit();
     change(null, status: RxStatus.loading());
     firebaseUser = Rx<User?>(null);
-    firebaseUser.bindStream(authRepo.currentUser);
+    title = RxString('');
     isPasswordError = false.obs;
+    _checkUser();
     _initFields();
-
-    ever(firebaseUser, _setScreenTitle);
   }
 
   void _initFields() {
-    List<FormFieldModel> list = FieldType.values.map((t) {
-      return FormFieldModel.fromType(t);
-    }).toList();
-    list.removeWhere((element) {
-      return firebaseUser.value != null &&
-          element.fieldType == FieldType.confirmPassword;
-    });
+    List<FormFieldModel> list = [];
+    list.add(FormFieldModel.fromType(FieldType.email));
     fields = list.obs;
     change(fields, status: RxStatus.success());
   }
@@ -72,22 +67,27 @@ class SignUpController extends SubscriptionState<SignUpController> {
     }));
   }
 
-  void _setScreenTitle(User? user) {
-    title = user != null ? AppStrings.login.obs : AppStrings.signUp.obs;
-    change(title, status: RxStatus.success());
+  void _checkUser() {
+    disposeLater(authRepo.currentUser.listen((user) {
+      firebaseUser.value = user;
+      change(firebaseUser.value, status: RxStatus.success());
+      title = user == null ? AppStrings.login.obs : AppStrings.syncOptions.obs;
+      change(title.value, status: RxStatus.success());
+    }));
   }
 
   void login(String email, String password) {
     disposeLater(authRepo.login(email, password).listen((response) {
       switch (response.state) {
         case ResponseState.success:
-          // TODO: Handle this case.
+          // Get.toNamed(Routes.syncOptions);
           break;
         case ResponseState.loading:
-          // TODO: Handle this case.
+          change(null, status: RxStatus.loading());
           break;
         case ResponseState.error:
-          // TODO: Handle this case.
+          change(response.error.toString(),
+              status: RxStatus.error(response.error.toString()));
           break;
       }
     }));
@@ -97,7 +97,7 @@ class SignUpController extends SubscriptionState<SignUpController> {
     disposeLater(authRepo.signup(email, password).listen((response) {
       switch (response.state) {
         case ResponseState.success:
-          // TODO: Handle this case.
+          // Get.toNamed(Routes.syncOptions);
           break;
         case ResponseState.loading:
           change(null, status: RxStatus.loading());
@@ -111,14 +111,36 @@ class SignUpController extends SubscriptionState<SignUpController> {
   }
 
   void goToNext() {
-    validateConfirmPassword();
-    if (!isPasswordError.value) {
-      firebaseUser.value != null
-          ? login(_emailField.textEditingController.text,
-              _passwordField.textEditingController.text)
-          : signUp(_emailField.textEditingController.text,
+    if (_emailField.textEditingController.text.isNotEmpty) {
+      disposeLater(authRepo
+          .checkAccountExists(_emailField.textEditingController.text)
+          .listen((exists) {
+        accountExists = exists.obs;
+        fields.value.addIf(
+            !_hasPasswordField, FormFieldModel.fromType(FieldType.password));
+        change(fields, status: RxStatus.success());
+
+        if (exists &&
+            !isPasswordError.value &&
+            _passwordField.textEditingController.text.isNotEmpty) {
+          login(_emailField.textEditingController.text,
               _passwordField.textEditingController.text);
+        } else if (!exists &&
+            _passwordField.textEditingController.text.isNotEmpty) {
+          fields.value.addIf(!_hasConfirmPasswordField,
+              FormFieldModel.fromType(FieldType.confirmPassword));
+          validateConfirmPassword();
+          signUp(_emailField.textEditingController.text,
+              _passwordField.textEditingController.text);
+        }
+      }));
+      _checkUser();
     }
+  }
+
+  void logout() {
+    disposeLater(authRepo.signOut().listen((event) {}));
+    ;
   }
 
   FormFieldModel get _emailField =>
@@ -129,4 +151,10 @@ class SignUpController extends SubscriptionState<SignUpController> {
 
   FormFieldModel get _confirmPasswordField =>
       fields.value.firstWhere((f) => f.fieldType == FieldType.confirmPassword);
+
+  bool get _hasPasswordField =>
+      fields.value.any((element) => element.fieldType == FieldType.password);
+
+  bool get _hasConfirmPasswordField => fields.value
+      .any((element) => element.fieldType == FieldType.confirmPassword);
 }

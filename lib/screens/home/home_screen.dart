@@ -19,6 +19,7 @@ class HomeScreen extends GetView<HomeController> {
       builder: (controller) => Scaffold(
         appBar: CustomAppBar(
           title: controller.screenTitle,
+
         ),
         body: Container(
           child: _bodyByIndex,

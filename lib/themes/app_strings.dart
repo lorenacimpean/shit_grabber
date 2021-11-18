@@ -37,4 +37,7 @@ class AppStrings {
   static const String signUpInfo =
       ' In order for the app to sync your files with the server you have to create an account.'
       '\n Please fill in the fields below with the required info.';
+
+  //Options screen
+  static const syncOptions = "Sync Options";
 }

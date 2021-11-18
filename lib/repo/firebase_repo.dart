@@ -44,5 +44,13 @@ class AuthRepo {
     });
   }
 
+  Stream<bool> checkAccountExists(String email) {
+    return auth
+        .fetchSignInMethodsForEmail(email)
+        .asStream()
+        .map((list) => list.isNotEmpty)
+        .onErrorReturnWith((error, stackTrace) => false);
+  }
+
   Stream<User?> get currentUser => auth.userChanges();
 }
