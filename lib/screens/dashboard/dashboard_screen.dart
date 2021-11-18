@@ -53,7 +53,7 @@ class DashboardScreen extends GetView<DashboardController> {
                   binding: FilePreviewBinding())),
         ),
         // onLoading: LoadingWidget(),
-        onError: (error) => AppErrorWidget(errorMessage: error ?? ''),
+        onError: (error) => AppErrorWidget(error: error),
       ),
     );
   }

@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:shit_grabber/controllers/sign_up_controller.dart';
+import 'package:shit_grabber/controllers/settings_controller.dart';
 
-class SignUpBinding extends Bindings {
+class SettingsBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put(SignUpController());
+    Get.put(SettingsController());
   }
 }

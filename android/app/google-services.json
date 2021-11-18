@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "16808225442",
+    "project_id": "shitgrabber-83bbf",
+    "storage_bucket": "shitgrabber-83bbf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:16808225442:android:72d6ba5064c19d551285fb",
+        "android_client_info": {
+          "package_name": "com.example.shit_grabber"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "16808225442-dvrfrb979voa740e45ne5q540gcvbpuu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0FQau73BAc001AbVzkuRLifhPE9V1zgM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "16808225442-dvrfrb979voa740e45ne5q540gcvbpuu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

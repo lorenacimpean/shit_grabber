@@ -25,13 +25,21 @@ class AppStrings {
   static const String emailFormatError = 'Invalid email';
   static const String passwordError =
       'Password must contain at least 8 characters, a number and a capital letter';
+  static const String emailError = 'Please use a valid email address';
   static const String confirmPasswordError =
       'Passwords did not match. Please fill them out again';
   static const String submit = 'Submit';
   static const String retry = 'Retry';
 
-  // Sign up
+  // Settings screen
+
+  static const signup = 'Sign up';
+  static const login = 'Login';
+  static const logout = 'Logout';
   static const String signUpInfo =
-      ' In order for the app to sync your files with the server you have to create an account.'
-      '\n Please fill in the fields below with the required info.';
+      'In order for the app to sync your files with the cloud database you have to create an account.'
+      '\nPlease fill in the fields below with the required info.';
+  static const syncOptions =
+      'You are currently signed in, and your documents are being synced with the cloud database. '
+      '\nIf you would like to stop syncing your documents, you can logout by tapping on the button below.';
 }

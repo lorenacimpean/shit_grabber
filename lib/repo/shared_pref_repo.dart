@@ -33,4 +33,11 @@ class SharedPrefRepo {
         list.addAllUnique(newValues);
         return setStringList(key, list).map((result) => result);
       });
+
+  Stream<bool?> getBool(String key) =>
+      init().map((_sharedPreferences) => _sharedPreferences.getBool(key));
+
+  Stream<bool> setBool(String key, bool value) =>
+      init().flatMap((_sharedPreferences) =>
+          _sharedPreferences.setBool(key, value).asStream());
 }

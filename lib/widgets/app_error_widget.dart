@@ -6,13 +6,13 @@ import 'package:shit_grabber/themes/app_strings.dart';
 import 'package:shit_grabber/themes/app_text_theme.dart';
 
 class AppErrorWidget extends StatelessWidget {
-  final String? errorMessage;
+  final Object? error;
   final VoidCallback? onRetry;
   final String? retryText;
 
   const AppErrorWidget({
     Key? key,
-    required this.errorMessage,
+    required this.error,
     this.onRetry,
     this.retryText,
   }) : super(key: key);
@@ -39,7 +39,7 @@ class AppErrorWidget extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(AppDimensions.defaultPadding),
           child: Text(
-            errorMessage ?? AppStrings.genericError,
+            _errorString ?? AppStrings.genericError,
             style: AppTextTheme.darkTextTheme.headline2
                 ?.copyWith(color: AppColors.error),
           ),
@@ -56,4 +56,14 @@ class AppErrorWidget extends StatelessWidget {
           ),
         ),
       );
+
+  String? get _errorString {
+    if (error is Error) {
+      return (error as Error).stackTrace.toString();
+    } else if (error is String) {
+      return error as String;
+    } else {
+      return null;
+    }
+  }
 }
