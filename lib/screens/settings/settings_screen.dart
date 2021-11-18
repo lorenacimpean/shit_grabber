@@ -6,6 +6,8 @@ import 'package:shit_grabber/screens/settings/authentification_widget.dart';
 import 'package:shit_grabber/screens/settings/option_card.dart';
 import 'package:shit_grabber/themes/app_colors.dart';
 import 'package:shit_grabber/themes/app_dimensions.dart';
+import 'package:shit_grabber/themes/app_strings.dart';
+import 'package:shit_grabber/themes/app_text_theme.dart';
 import 'package:shit_grabber/widgets/app_error_widget.dart';
 import 'package:shit_grabber/widgets/loading_widget.dart';
 
@@ -26,18 +28,40 @@ class SettingsScreen extends GetView<SettingsController> {
                 onSubmit: controller.goToNext,
                 isConfirmPasswordValid: !controller.isPasswordError.value,
               )
-            : Center(
-                child: SettingsOption(
-                  title: "sign out",
-                  onTap: controller.logout,
-                ),
-              ),
+            : _buildSyncInfo(),
         onLoading: LoadingWidget(),
         onError: (e) => AppErrorWidget(
           error: e,
           onRetry: controller.onInit,
         ),
       ),
+    );
+  }
+
+  Widget _buildSyncInfo() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          _syncInfoText(),
+          Padding(
+            padding: const EdgeInsets.only(top: AppDimensions.largePadding),
+            child: SettingsOption(
+              title: AppStrings.logout,
+              onTap: controller.logout,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _syncInfoText() {
+    return Text(
+      AppStrings.syncOptions,
+      style: AppTextTheme.darkTextTheme.headline2
+          ?.copyWith(color: AppColors.appWhite),
     );
   }
 }

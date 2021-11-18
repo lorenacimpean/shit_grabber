@@ -30,14 +30,15 @@ class AppStrings {
   static const String submit = 'Submit';
   static const String retry = 'Retry';
 
-  // Sign up
+  // Settings screen
 
   static const signup = 'Sign up';
   static const login = 'Login';
+  static const logout = 'Logout';
   static const String signUpInfo =
       ' In order for the app to sync your files with the server you have to create an account.'
       '\n Please fill in the fields below with the required info.';
-
-  //Options screen
-  static const syncOptions = "Sync Options";
+  static const syncOptions =
+      "You are currently signed in, and your documents are being synced with the cloud database. "
+      "\nIf you would like to stop syncing your documents, you can logout by tapping on the button below.";
 }
