@@ -7,6 +7,8 @@ import 'package:shit_grabber/controllers/dashboard_controller.dart';
 import 'package:shit_grabber/screens/dashboard/document_card.dart';
 import 'package:shit_grabber/screens/file_preview/file_preview_screen.dart';
 import 'package:shit_grabber/themes/app_colors.dart';
+import 'package:shit_grabber/themes/app_strings.dart';
+import 'package:shit_grabber/widgets/app_dialog.dart';
 import 'package:shit_grabber/widgets/app_error_widget.dart';
 
 class DashboardScreen extends GetView<DashboardController> {
@@ -43,9 +45,7 @@ class DashboardScreen extends GetView<DashboardController> {
           itemCount: controller.documents.length,
           itemBuilder: (context, index) => DocumentCard(
               title: controller.documents[index].name,
-              onDelete: () {
-                controller.deleteDocument(controller.documents[index].name);
-              },
+              onDelete: () => _showDialog(controller.documents[index].name),
               //TODO: check if can edit document name
               onEdit: () => print('Tapped edit'),
               onTap: () => Get.to(() => FilePreviewScreen(),
@@ -56,5 +56,18 @@ class DashboardScreen extends GetView<DashboardController> {
         onError: (error) => AppErrorWidget(error: error),
       ),
     );
+  }
+
+  void _showDialog(String documentName) {
+    AppDialog dialog = AppDialog(
+      title: AppStrings.areYouSure,
+      contentText: AppStrings.itemDelete,
+      onConfirm: () {
+        controller.deleteDocument(documentName);
+        Get.back();
+      },
+      onCancel: () => Get.back(),
+    );
+    dialog.showDialog();
   }
 }
