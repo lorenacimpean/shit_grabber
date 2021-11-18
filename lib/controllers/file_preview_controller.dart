@@ -4,11 +4,14 @@ import 'package:get/get.dart';
 import 'package:shit_grabber/models/document_model.dart';
 import 'package:shit_grabber/utils/subscription_state.dart';
 
-enum FileTypes { pdf, img, none }
+enum FileTypes {
+  pdf,
+  img,
+  none,
+}
 
 class FilePreviewController extends SubscriptionState<FilePreviewController> {
   static const List<String> _imageFormats = ['jpg', 'jpeg', 'png'];
-  late String _path;
   late File _file;
   late Rx<FileTypes> fileType;
 
@@ -16,8 +19,7 @@ class FilePreviewController extends SubscriptionState<FilePreviewController> {
   void onInit() {
     super.onInit();
     DocumentModel documentModel = Get.arguments;
-    _path = documentModel.path;
-    _file = File(_path);
+    _file = File(documentModel.path);
     fileType = Rx<FileTypes>(FileTypes.none);
     _checkFile();
   }
@@ -56,11 +58,11 @@ class FilePreviewController extends SubscriptionState<FilePreviewController> {
   bool get isImage => _imageFormats.contains(_fileTypeString);
 
   String get _fileTypeString {
-    int i = _path.lastIndexOf('.');
+    int i = _file.path.lastIndexOf('.');
     if (i <= -1) {
       return '';
     }
-    return _path.substring(i + 1);
+    return _file.path.substring(i + 1);
   }
 }
 

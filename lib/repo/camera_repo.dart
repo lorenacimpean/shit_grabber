@@ -2,7 +2,6 @@ import 'package:camera/camera.dart';
 import 'package:shit_grabber/models/document_model.dart';
 
 class CameraRepo {
-
   Stream<List<CameraDescription>> get cameras => availableCameras().asStream();
 
   Stream<void> initCameraController(CameraController cameraController) {
@@ -20,6 +19,7 @@ class CameraRepo {
         name: file.name,
         path: file.path,
         lastModified: DateTime.now(),
+        encodedString: DocumentModel.encodeFile(file.path),
       ),
     );
   }
