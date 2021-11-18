@@ -6,6 +6,10 @@ class AppStrings {
   static const String settings = 'Settings';
   static const String genericError = 'Something went wrong';
 
+  //Dashboard
+  static const String areYouSure= 'Are you sure?';
+  static const String itemDelete = 'The item will be removed from the list';
+
   // Permissions
   static const String cameraPermission =
       'The app needs camera permission in order to take photos.';
