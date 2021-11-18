@@ -23,12 +23,8 @@ dependencies:
       url: https://github.com/camsim99/plugins.git
       path: packages/camera/camera
       ref: issue_89578_dev
-  permission_handler: ^8.2.5
-  firebase_core: ^1.9.0
-  firebase_auth: ^3.1.5
-  google_sign_in: ^5.2.1
   syncfusion_flutter_pdf: ^19.3.54-beta
-  cloud_firestore: ^3.1.0
+  flutter_launcher_icons: ^0.9.2
 
 dev_dependencies:
   flutter_test:
